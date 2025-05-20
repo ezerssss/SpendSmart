@@ -12,6 +12,15 @@ class OnBoardingPage extends StatefulWidget {
 
 class _OnBoardingPageState extends State<OnBoardingPage>
     with SingleTickerProviderStateMixin {
+  static const pageDecoration = const PageDecoration(
+    titleTextStyle: TextStyle(
+      color: AppColors.secondary,
+      fontSize: AppTextSize.title,
+      fontWeight: FontWeight.bold,
+    ),
+    bodyTextStyle: TextStyle(fontSize: AppTextSize.body),
+  );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,14 +31,7 @@ class _OnBoardingPageState extends State<OnBoardingPage>
             body:
                 "Track your spending effortlessly by snapping a photo of your receipt. Let AI do the rest.",
             image: Icon(Icons.camera_alt, size: 200),
-            decoration: const PageDecoration(
-              titleTextStyle: TextStyle(
-                color: AppColors.secondary,
-                fontSize: AppTextSize.title,
-                fontWeight: FontWeight.bold,
-              ),
-              bodyTextStyle: TextStyle(fontSize: AppTextSize.body),
-            ),
+            decoration: pageDecoration,
           ),
 
           PageViewModel(
@@ -37,14 +39,7 @@ class _OnBoardingPageState extends State<OnBoardingPage>
             body:
                 "View charts and insights to see where your money goes. Set budgets and stick to them with ease.",
             image: Icon(Icons.bar_chart, size: 200),
-            decoration: const PageDecoration(
-              titleTextStyle: TextStyle(
-                color: AppColors.secondary,
-                fontSize: AppTextSize.title,
-                fontWeight: FontWeight.bold,
-              ),
-              bodyTextStyle: TextStyle(fontSize: AppTextSize.body),
-            ),
+            decoration: pageDecoration,
           ),
 
           PageViewModel(
@@ -52,14 +47,7 @@ class _OnBoardingPageState extends State<OnBoardingPage>
             body:
                 "Get personalized tips to improve your spending behavior, powered by OpenAI and your own data.",
             image: Icon(Icons.lightbulb_outline, size: 200),
-            decoration: const PageDecoration(
-              titleTextStyle: TextStyle(
-                color: AppColors.secondary,
-                fontSize: AppTextSize.title,
-                fontWeight: FontWeight.bold,
-              ),
-              bodyTextStyle: TextStyle(fontSize: AppTextSize.body),
-            ),
+            decoration: pageDecoration,
           ),
 
           PageViewModel(
@@ -67,14 +55,7 @@ class _OnBoardingPageState extends State<OnBoardingPage>
             body:
                 "Sign in with Google to save your data securely and access your personal finance dashboard anytime.",
             image: Icon(Icons.lock, size: 200),
-            decoration: const PageDecoration(
-              titleTextStyle: TextStyle(
-                color: AppColors.secondary,
-                fontSize: AppTextSize.title,
-                fontWeight: FontWeight.bold,
-              ),
-              bodyTextStyle: TextStyle(fontSize: AppTextSize.body),
-            ),
+            decoration: pageDecoration,
           ),
         ],
         showSkipButton: true,
