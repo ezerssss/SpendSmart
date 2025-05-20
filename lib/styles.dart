@@ -21,6 +21,11 @@ class AppBorderRadius {
   static const double xxl = 25;
 }
 
+class AppTextSize {
+  static const double body = 15;
+  static const double title = 20;
+}
+
 class AppThemes {
   static ThemeData getTheme() {
     return ThemeData(

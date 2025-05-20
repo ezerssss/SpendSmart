@@ -25,10 +25,10 @@ class _OnBoardingPageState extends State<OnBoardingPage>
             decoration: const PageDecoration(
               titleTextStyle: TextStyle(
                 color: AppColors.secondary,
-                fontSize: 20.0,
+                fontSize: AppTextSize.title,
                 fontWeight: FontWeight.bold,
               ),
-              bodyTextStyle: TextStyle(fontSize: 15.0),
+              bodyTextStyle: TextStyle(fontSize: AppTextSize.body),
             ),
           ),
 
@@ -40,10 +40,10 @@ class _OnBoardingPageState extends State<OnBoardingPage>
             decoration: const PageDecoration(
               titleTextStyle: TextStyle(
                 color: AppColors.secondary,
-                fontSize: 20.0,
+                fontSize: AppTextSize.title,
                 fontWeight: FontWeight.bold,
               ),
-              bodyTextStyle: TextStyle(fontSize: 15.0),
+              bodyTextStyle: TextStyle(fontSize: AppTextSize.body),
             ),
           ),
 
@@ -55,10 +55,10 @@ class _OnBoardingPageState extends State<OnBoardingPage>
             decoration: const PageDecoration(
               titleTextStyle: TextStyle(
                 color: AppColors.secondary,
-                fontSize: 20.0,
+                fontSize: AppTextSize.title,
                 fontWeight: FontWeight.bold,
               ),
-              bodyTextStyle: TextStyle(fontSize: 15.0),
+              bodyTextStyle: TextStyle(fontSize: AppTextSize.body),
             ),
           ),
 
@@ -70,10 +70,10 @@ class _OnBoardingPageState extends State<OnBoardingPage>
             decoration: const PageDecoration(
               titleTextStyle: TextStyle(
                 color: AppColors.secondary,
-                fontSize: 20.0,
+                fontSize: AppTextSize.title,
                 fontWeight: FontWeight.bold,
               ),
-              bodyTextStyle: TextStyle(fontSize: 15.0),
+              bodyTextStyle: TextStyle(fontSize: AppTextSize.body),
             ),
           ),
         ],
