@@ -17,7 +17,7 @@ class _LoginPageState extends State<LoginPage> {
   Future<void> signIn() async {
     userCredential.value = await authService.signInWithGoogle();
     if (userCredential.value != null) {
-      log(userCredential.value.user!.email);
+      log(userCredential.value.user.email);
     }
   }
 
