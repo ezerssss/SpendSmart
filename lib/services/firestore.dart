@@ -18,7 +18,7 @@ class FirestoreService {
           "email": user.email,
         };
 
-        docRef.set(userData);
+        await docRef.set(userData);
       }
     } on Exception catch (e) {
       log('exception->$e');
