@@ -20,13 +20,13 @@ class AuthService {
 
       return await _auth.signInWithCredential(credential);
     } on Exception catch (e) {
-      // TODO
       log('exception->$e');
     }
   }
 
   Future<bool> signOutFromGoogle() async {
     try {
+      await GoogleSignIn().signOut();
       await _auth.signOut();
       return true;
     } on Exception catch (_) {

@@ -23,7 +23,9 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<void> signOut() async {
     bool result = await authService.signOutFromGoogle();
-    if (result) userCredential.value = '';
+    if (result) {
+      userCredential.value = null;
+    }
   }
 
   @override
