@@ -7,20 +7,12 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:483363217342:android:f1a8b3c41d8565049563ef",
+        "mobilesdk_app_id": "1:483363217342:android:56a2915ee65eb4039563ef",
         "android_client_info": {
           "package_name": "com.komsai_marketplace.spend_smart"
         }
       },
       "oauth_client": [
-        {
-          "client_id": "483363217342-ropqr4cd81ffnolnq7efi3bucmkhl5ss.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.komsai_marketplace.spend_smart",
-            "certificate_hash": "0ee71be76a6ce6397770fa43b7730604e846bcb2"
-          }
-        },
         {
           "client_id": "483363217342-5ghffde0252jm3r2nqn0lgthc0d31ud8.apps.googleusercontent.com",
           "client_type": 3
