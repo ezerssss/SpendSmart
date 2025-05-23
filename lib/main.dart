@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:spendsmart/on_boarding_page.dart';
+import 'package:spendsmart/login_page.dart';
 import 'package:spendsmart/styles.dart';
+import 'services/firebase.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await FirebaseService.initialize();
   runApp(const SpendSmart());
 }
 
@@ -16,7 +18,7 @@ class SpendSmart extends StatelessWidget {
       title: 'Spend Smart',
       theme: AppThemes.theme,
       debugShowCheckedModeBanner: false,
-      home: const OnBoardingPage(),
+      home: const LoginPage(),
     );
   }
 }
