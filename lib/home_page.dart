@@ -42,12 +42,7 @@ class _HomePageState extends State<HomePage> {
                   vertical: 12,
                   horizontal: 30,
                 ),
-                child: Column(
-                  children: [
-                    Text("SpendSmart"),
-                    ElevatedButton(onPressed: signOut, child: Text("Sign out")),
-                  ],
-                ),
+                child: Text("SpendSmart"),
               ),
               Container(
                 padding: const EdgeInsets.symmetric(
@@ -59,7 +54,17 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ),
-        body: TabBarView(children: [Text("SpendSmart"), MyReceiptsPage()]),
+        body: TabBarView(
+          children: [
+            Column(
+              children: [
+                Text("SpendSmart"),
+                ElevatedButton(onPressed: signOut, child: Text("Sign out")),
+              ],
+            ),
+            MyReceiptsPage(),
+          ],
+        ),
       ),
     );
   }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:photo_view/photo_view.dart';
 import 'package:intl/intl.dart';
+import 'full_image.dart';
 
 class MyReceiptsPage extends StatefulWidget {
   const MyReceiptsPage({super.key});
@@ -108,7 +108,9 @@ class _MyReceiptsPageState extends State<MyReceiptsPage> {
                         context,
                         MaterialPageRoute(
                           builder: (_) {
-                            return FullReceiptImage();
+                            return FullReceiptImage(
+                              imageUrl: "https://picsum.photos/200/300",
+                            );
                           },
                         ),
                       ),
@@ -117,23 +119,5 @@ class _MyReceiptsPageState extends State<MyReceiptsPage> {
             );
           },
         );
-  }
-}
-
-class FullReceiptImage extends StatefulWidget {
-  const FullReceiptImage({super.key});
-
-  @override
-  State<FullReceiptImage> createState() => _FullReceiptImageState();
-}
-
-class _FullReceiptImageState extends State<FullReceiptImage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: PhotoView(
-        imageProvider: NetworkImage("https://picsum.photos/200/300"),
-      ),
-    );
   }
 }
