@@ -28,15 +28,15 @@ class _HomePageState extends State<HomePage> {
       scannerResult = 'Failed to get scanned documents.';
     }
 
-    if (scannerResult is! Map) {
-      return;
+    if (scannerResult is Map) {
+      String uri = ScannerUtils.extractFileUri(scannerResult["Uri"].toString());
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ProcessingReceiptPage(uri: uri),
+        ),
+      );
     }
-
-    String uri = ScannerUtils.extractFileUri(scannerResult["Uri"].toString());
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => ProcessingReceiptPage(uri: uri)),
-    );
   }
 
   Future<void> signOut() async {
@@ -84,7 +84,6 @@ class _HomePageState extends State<HomePage> {
           children: [
             Column(
               children: [
-                Text("SpendSmart"),
                 ElevatedButton(onPressed: signOut, child: Text("Sign out")),
                 ElevatedButton.icon(
                   onPressed: handleScan,
