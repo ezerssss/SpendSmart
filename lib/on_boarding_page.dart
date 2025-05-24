@@ -4,6 +4,7 @@ import 'package:spendsmart/app_state.dart';
 import 'package:spendsmart/home_page.dart';
 import 'package:spendsmart/services/firestore.dart';
 import 'package:spendsmart/styles.dart';
+import 'package:spendsmart/utils/transitions.dart';
 
 class OnBoardingPage extends StatefulWidget {
   const OnBoardingPage({super.key});
@@ -79,10 +80,7 @@ class _OnBoardingPageState extends State<OnBoardingPage>
 
           if (!mounted) return;
 
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => const HomePage()),
-          );
+          Navigator.pushReplacement(context, createRoute(HomePage()));
         },
         dotsDecorator: DotsDecorator(
           size: const Size.square(10.0),

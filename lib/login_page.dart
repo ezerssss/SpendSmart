@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spendsmart/app_state.dart';
 import 'package:spendsmart/home_page.dart';
 import 'package:spendsmart/on_boarding_page.dart';
+import 'package:spendsmart/utils/transitions.dart';
 import 'services/auth.dart';
 
 class LoginPage extends StatefulWidget {
@@ -13,32 +14,30 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final authService = AuthService();
+  bool isLoading = false;
+
+
 
   Future<void> signIn() async {
     try {
+      setState(() => isLoading = true);
       AppState().currentUser.value = await authService.signInWithGoogle();
 
       if (!mounted) return;
 
       if (AppState().currentUser.value["isOnboarded"]) {
-        Navigator.pushReplacement<void, void>(
-          context,
-          MaterialPageRoute<void>(
-            builder: (BuildContext context) => const HomePage(),
-          ),
-        );
+        Navigator.pushReplacement(context, createRoute(HomePage()));
       } else {
-        Navigator.pushReplacement<void, void>(
-          context,
-          MaterialPageRoute<void>(
-            builder: (BuildContext context) => const OnBoardingPage(),
-          ),
-        );
+        Navigator.pushReplacement(context, createRoute(OnBoardingPage()));
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Sign-in failed. Please try again.")),
-      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Sign-in failed. Please try again.")),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => isLoading = false);
     }
   }
 
@@ -92,9 +91,9 @@ class _LoginPageState extends State<LoginPage> {
                         width: 20,
                         child: Image.asset('assets/google_icon.png'),
                       ),
-                      onPressed: signIn,
+                      onPressed: isLoading ? null : signIn,
                       label: Text(
-                        "Sign in with Google",
+                        isLoading ? "Signing in..." : "Sign in with Google",
                         style: TextStyle(color: Colors.black),
                       ),
                       style: ElevatedButton.styleFrom(

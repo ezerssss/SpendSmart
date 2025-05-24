@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spendsmart/app_state.dart';
 import 'package:spendsmart/login_page.dart';
 import 'package:spendsmart/services/auth.dart';
+import 'package:spendsmart/utils/transitions.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -21,12 +22,7 @@ class _HomePageState extends State<HomePage> {
 
     if (!mounted) return;
 
-    Navigator.pushReplacement<void, void>(
-      context,
-      MaterialPageRoute<void>(
-        builder: (BuildContext context) => const LoginPage(),
-      ),
-    );
+    Navigator.pushReplacement(context, createRoute(LoginPage()));
   }
 
   @override
