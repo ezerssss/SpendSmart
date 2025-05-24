@@ -14,6 +14,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "483363217342-svaqonuvpd11edg9vak5oi19o4uvrdla.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.komsai_marketplace.spend_smart",
+            "certificate_hash": "014381645daf261d2ca0e997d79d1af1443aca92"
+          }
+        },
+        {
+          "client_id": "483363217342-vjc99121fss4itbhd8aqrsgqg1cjoocd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.komsai_marketplace.spend_smart",
+            "certificate_hash": "4f8922e3b75e91cb49b964ca2bbd01f2704ec363"
+          }
+        },
+        {
           "client_id": "483363217342-5ghffde0252jm3r2nqn0lgthc0d31ud8.apps.googleusercontent.com",
           "client_type": 3
         }
