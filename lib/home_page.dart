@@ -12,10 +12,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final authService = AuthService();
-
   Future<void> signOut() async {
-    bool result = await authService.signOutFromGoogle();
+    bool result = await AuthService.signOutFromGoogle();
     if (result) {
       AppState().currentUser.value = {};
     }

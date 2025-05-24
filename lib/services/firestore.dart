@@ -4,9 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class FirestoreService {
-  final FirebaseFirestore _db = FirebaseFirestore.instance;
+  static final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  Future<Map<String, dynamic>> addUser(User user) async {
+  static Future<Map<String, dynamic>> addUser(User user) async {
     try {
       final docRef = _db.collection("users").doc(user.uid);
       final userDoc = await docRef.get();
@@ -30,7 +30,7 @@ class FirestoreService {
     }
   }
 
-  Future<void> completeOnboarding(String userId) async {
+  static Future<void> completeOnboarding(String userId) async {
     try {
       final docRef = _db.collection("users").doc(userId);
 

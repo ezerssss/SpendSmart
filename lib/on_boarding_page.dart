@@ -25,7 +25,7 @@ class _OnBoardingPageState extends State<OnBoardingPage>
   );
 
   Future<void> completeOnboarding() async {
-    await FirestoreService().completeOnboarding(
+    await FirestoreService.completeOnboarding(
       AppState().currentUser.value["uid"],
     );
     AppState().currentUser.value = {

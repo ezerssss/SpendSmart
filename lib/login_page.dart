@@ -13,15 +13,12 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final authService = AuthService();
   bool isLoading = false;
-
-
 
   Future<void> signIn() async {
     try {
       setState(() => isLoading = true);
-      AppState().currentUser.value = await authService.signInWithGoogle();
+      AppState().currentUser.value = await AuthService.signInWithGoogle();
 
       if (!mounted) return;
 
@@ -42,7 +39,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<void> signOut() async {
-    bool result = await authService.signOutFromGoogle();
+    bool result = await AuthService.signOutFromGoogle();
     if (result) {
       AppState().currentUser.value = {};
     }
