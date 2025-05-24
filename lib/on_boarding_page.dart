@@ -51,7 +51,7 @@ class _OnBoardingPageState extends State<OnBoardingPage>
             title: "Understand Your Finances",
             body:
                 "View charts and insights to see where your money goes. Set budgets and stick to them with ease.",
-            image: Icon(Icons.bar_chart, size: 200),
+            image: Icon(Icons.bar_chart_rounded, size: 200),
             decoration: pageDecoration,
           ),
 
