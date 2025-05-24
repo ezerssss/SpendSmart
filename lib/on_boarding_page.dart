@@ -43,7 +43,7 @@ class _OnBoardingPageState extends State<OnBoardingPage>
             title: "Welcome to SpendSmart",
             body:
                 "Track your spending effortlessly by snapping a photo of your receipt. Let AI do the rest.",
-            image: Icon(Icons.camera_alt, size: 200),
+            image: Icon(Icons.camera_alt, size: 175),
             decoration: pageDecoration,
           ),
 
@@ -51,7 +51,7 @@ class _OnBoardingPageState extends State<OnBoardingPage>
             title: "Understand Your Finances",
             body:
                 "View charts and insights to see where your money goes. Set budgets and stick to them with ease.",
-            image: Icon(Icons.bar_chart_rounded, size: 200),
+            image: Icon(Icons.trending_up_rounded, size: 175),
             decoration: pageDecoration,
           ),
 
@@ -59,7 +59,7 @@ class _OnBoardingPageState extends State<OnBoardingPage>
             title: "Smarter Money Habits",
             body:
                 "Get personalized tips to improve your spending behavior, powered by OpenAI and your own data.",
-            image: Icon(Icons.lightbulb_outline, size: 200),
+            image: Icon(Icons.lightbulb_outline, size: 175),
             decoration: pageDecoration,
           ),
 
@@ -67,7 +67,7 @@ class _OnBoardingPageState extends State<OnBoardingPage>
             title: "Secure & Personalized",
             body:
                 "Sign in with Google to save your data securely and access your personal finance dashboard anytime.",
-            image: Icon(Icons.lock, size: 200),
+            image: Icon(Icons.lock, size: 175),
             decoration: pageDecoration,
           ),
         ],
