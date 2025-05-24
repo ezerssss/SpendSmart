@@ -1,6 +1,7 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
+import 'package:spendsmart/app_state.dart';
+import 'package:spendsmart/home_page.dart';
+import 'package:spendsmart/on_boarding_page.dart';
 import 'services/auth.dart';
 
 class LoginPage extends StatefulWidget {
@@ -11,20 +12,34 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  ValueNotifier userCredential = ValueNotifier('');
   final authService = AuthService();
 
   Future<void> signIn() async {
-    userCredential.value = await authService.signInWithGoogle();
-    if (userCredential.value != null) {
-      log(userCredential.value.user.email);
+    AppState().currentUser.value = await authService.signInWithGoogle();
+
+    if (!mounted) return;
+
+    if (AppState().currentUser.value["isOnboarded"]) {
+      Navigator.pushReplacement<void, void>(
+        context,
+        MaterialPageRoute<void>(
+          builder: (BuildContext context) => const HomePage(),
+        ),
+      );
+    } else {
+      Navigator.pushReplacement<void, void>(
+        context,
+        MaterialPageRoute<void>(
+          builder: (BuildContext context) => const OnBoardingPage(),
+        ),
+      );
     }
   }
 
   Future<void> signOut() async {
     bool result = await authService.signOutFromGoogle();
     if (result) {
-      userCredential.value = null;
+      AppState().currentUser.value = {};
     }
   }
 
@@ -32,46 +47,18 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ValueListenableBuilder(
-        valueListenable: userCredential,
-        builder: (context, value, child) {
-          return (userCredential.value == '' || userCredential.value == null)
-              ? Center(
-                child: ElevatedButton.icon(
-                  icon: SizedBox(
-                    width: 20,
-                    child: Image.asset('assets/google_icon.png'),
-                  ),
-                  onPressed: signIn,
-                  label: Text("Log in with Google"),
-                ),
-              )
-              : Center(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      clipBehavior: Clip.antiAlias,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(width: 1.5, color: Colors.black54),
-                      ),
-                      child: Image.network(
-                        userCredential.value.user!.photoURL.toString(),
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    Text(userCredential.value.user!.displayName.toString()),
-                    const SizedBox(height: 20),
-                    Text(userCredential.value.user!.email.toString()),
-                    const SizedBox(height: 30),
-                    ElevatedButton(
-                      onPressed: signOut,
-                      child: const Text('Logout'),
-                    ),
-                  ],
-                ),
-              );
+        valueListenable: AppState().currentUser,
+        builder: (context, user, _) {
+          return Center(
+            child: ElevatedButton.icon(
+              icon: SizedBox(
+                width: 20,
+                child: Image.asset('assets/google_icon.png'),
+              ),
+              onPressed: signIn,
+              label: Text("Log in with Google"),
+            ),
+          );
         },
       ),
     );

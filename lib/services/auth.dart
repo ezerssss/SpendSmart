@@ -7,7 +7,7 @@ import 'package:spendsmart/services/firestore.dart';
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Future<dynamic> signInWithGoogle() async {
+  Future<Map<String, dynamic>> signInWithGoogle() async {
     try {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
@@ -22,12 +22,12 @@ class AuthService {
       final userCredential = await _auth.signInWithCredential(credential);
 
       final dbService = FirestoreService();
-      final user = userCredential.user!;
-      await dbService.addUser(user);
+      final user = await dbService.addUser(userCredential.user!);
 
-      return userCredential;
+      return user;
     } on Exception catch (e) {
       log('exception->$e');
+      rethrow;
     }
   }
 

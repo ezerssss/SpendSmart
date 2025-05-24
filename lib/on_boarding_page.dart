@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
+import 'package:spendsmart/app_state.dart';
 import 'package:spendsmart/home_page.dart';
+import 'package:spendsmart/services/firestore.dart';
 import 'package:spendsmart/styles.dart';
 
 class OnBoardingPage extends StatefulWidget {
@@ -12,7 +14,7 @@ class OnBoardingPage extends StatefulWidget {
 
 class _OnBoardingPageState extends State<OnBoardingPage>
     with SingleTickerProviderStateMixin {
-  static const pageDecoration = const PageDecoration(
+  static const pageDecoration = PageDecoration(
     titleTextStyle: TextStyle(
       color: AppColors.secondary,
       fontSize: AppTextSize.title,
@@ -20,6 +22,16 @@ class _OnBoardingPageState extends State<OnBoardingPage>
     ),
     bodyTextStyle: TextStyle(fontSize: AppTextSize.body),
   );
+
+  Future<void> completeOnboarding() async {
+    await FirestoreService().completeOnboarding(
+      AppState().currentUser.value["uid"],
+    );
+    AppState().currentUser.value = {
+      ...AppState().currentUser.value,
+      'isOnboarded': true,
+    };
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,8 +74,12 @@ class _OnBoardingPageState extends State<OnBoardingPage>
         skip: const Text("Skip"),
         next: const Text("Next"),
         done: const Text("Done", style: TextStyle(fontWeight: FontWeight.w700)),
-        onDone: () {
-          Navigator.push(
+        onDone: () async {
+          await completeOnboarding();
+
+          if (!mounted) return;
+
+          Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => const HomePage()),
           );
