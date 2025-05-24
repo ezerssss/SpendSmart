@@ -15,9 +15,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _bottomNavIndex = 0;
-  List<IconData> iconList = [Icons.home_rounded, Icons.receipt_long_rounded];
-
   Future<void> signOut() async {
     bool result = await AuthService.signOutFromGoogle();
     if (result) {
@@ -29,47 +26,25 @@ class _HomePageState extends State<HomePage> {
     Navigator.pushReplacement(context, createRoute(LoginPage()));
   }
 
+  int bottomNavIndex = 0;
+  final List<IconData> iconList = [
+    Icons.home_rounded,
+    Icons.receipt_long_rounded,
+  ];
+
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text("SpendSmart"),
-          bottom: TabBar(
-            indicatorColor: Theme.of(context).colorScheme.secondary,
-            tabAlignment: TabAlignment.fill,
-            labelColor: Theme.of(context).colorScheme.secondary,
-            unselectedLabelColor: Colors.white,
-            tabs: [
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 12,
-                  horizontal: 30,
-                ),
-                child: Text("SpendSmart"),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 12,
-                  horizontal: 30,
-                ),
-                child: const Text("My Receipts"),
-              ),
-            ],
-          ),
-        ),
-        body: TabBarView(
-          children: [
-            Column(
-              children: [
-                Text("SpendSmart"),
-                ElevatedButton(onPressed: signOut, child: Text("Sign out")),
-              ],
-            ),
-            MyReceiptsPage(),
-          ],
-        ),
+    return Scaffold(
+      body: SafeArea(
+        child:
+            bottomNavIndex == 0
+                ? Column(
+                  children: [
+                    Text("SpendSmart"),
+                    ElevatedButton(onPressed: signOut, child: Text("Sign out")),
+                  ],
+                )
+                : MyReceiptsPage(),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
@@ -80,14 +55,14 @@ class _HomePageState extends State<HomePage> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: AnimatedBottomNavigationBar.builder(
         itemCount: iconList.length,
-        activeIndex: _bottomNavIndex,
+        activeIndex: bottomNavIndex,
         gapLocation: GapLocation.center,
         notchSmoothness: NotchSmoothness.softEdge,
-        onTap: (index) => setState(() => _bottomNavIndex = index),
+        onTap: (index) => setState(() => bottomNavIndex = index),
         tabBuilder: (int index, bool isActive) {
           return Icon(
             iconList[index],
-            size: 24,
+            size: 26,
             color: isActive ? AppColors.secondary : AppColors.black,
           );
         },
