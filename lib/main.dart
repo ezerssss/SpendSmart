@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:spendsmart/home_page.dart';
 import 'package:spendsmart/on_boarding_page.dart';
 import 'package:spendsmart/styles.dart';
+import 'my_receipts_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,7 +18,7 @@ class SpendSmart extends StatelessWidget {
       title: 'Spend Smart',
       theme: AppThemes.theme,
       debugShowCheckedModeBanner: false,
-      home: const OnBoardingPage(),
+      home: HomePage(),
     );
   }
 }
