@@ -4,24 +4,40 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class FirestoreService {
-  final FirebaseFirestore _db = FirebaseFirestore.instance;
+  static final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  Future<void> addUser(User user) async {
+  static Future<Map<String, dynamic>> addUser(User user) async {
     try {
       final docRef = _db.collection("users").doc(user.uid);
-      final getDocRef = await docRef.get();
+      final userDoc = await docRef.get();
 
-      if (!getDocRef.exists) {
+      if (!userDoc.exists) {
         final userData = {
           "uid": user.uid,
           "displayName": user.displayName,
           "email": user.email,
+          "isOnboarded": false,
         };
 
         await docRef.set(userData);
+        return userData;
       }
+
+      return userDoc.data()!;
     } on Exception catch (e) {
       log('exception->$e');
+      rethrow;
+    }
+  }
+
+  static Future<void> completeOnboarding(String userId) async {
+    try {
+      final docRef = _db.collection("users").doc(userId);
+
+      await docRef.update({"isOnboarded": true});
+    } on Exception catch (e) {
+      log('exception->$e');
+      rethrow;
     }
   }
 }
