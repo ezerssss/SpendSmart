@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "483363217342",
+    "project_id": "spend-smart-166b8",
+    "storage_bucket": "spend-smart-166b8.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:483363217342:android:56a2915ee65eb4039563ef",
+        "android_client_info": {
+          "package_name": "com.komsai_marketplace.spend_smart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "483363217342-5ghffde0252jm3r2nqn0lgthc0d31ud8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZGiK4lLjVJagsdjUQHY_6nMnL63vIydo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "483363217342-5ghffde0252jm3r2nqn0lgthc0d31ud8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
