@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_doc_scanner/flutter_doc_scanner.dart';
 import 'package:spendsmart/processing_reciept_page.dart';
 import 'package:spendsmart/utils/scanner.dart';
+import 'package:spendsmart/my_receipts_page.dart';
 import 'package:spendsmart/app_state.dart';
 import 'package:spendsmart/login_page.dart';
 import 'package:spendsmart/services/auth.dart';
@@ -51,18 +52,50 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text("SpendSmart")),
-      body: Column(
-        children: [
-          Text("SpendSmart"),
-          ElevatedButton(onPressed: signOut, child: Text("Sign out")),
-          ElevatedButton.icon(
-            onPressed: handleScan,
-            icon: Icon(Icons.receipt),
-            label: Text("Scan Receipt"),
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("SpendSmart"),
+          bottom: TabBar(
+            indicatorColor: Theme.of(context).colorScheme.secondary,
+            tabAlignment: TabAlignment.fill,
+            labelColor: Theme.of(context).colorScheme.secondary,
+            unselectedLabelColor: Colors.white,
+            tabs: [
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 12,
+                  horizontal: 30,
+                ),
+                child: Text("SpendSmart"),
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 12,
+                  horizontal: 30,
+                ),
+                child: const Text("My Receipts"),
+              ),
+            ],
           ),
-        ],
+        ),
+        body: TabBarView(
+          children: [
+            Column(
+              children: [
+                Text("SpendSmart"),
+                ElevatedButton(onPressed: signOut, child: Text("Sign out")),
+                ElevatedButton.icon(
+                  onPressed: handleScan,
+                  icon: Icon(Icons.receipt),
+                  label: Text("Scan Receipt"),
+                ),
+              ],
+            ),
+            MyReceiptsPage(),
+          ],
+        ),
       ),
     );
   }

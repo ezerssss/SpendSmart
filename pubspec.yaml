@@ -10,7 +10,8 @@ environment:
 dependencies:
     flutter:
         sdk: flutter
-
+    photo_view: ^0.15.0
+    intl: ^0.20.2
     cupertino_icons: ^1.0.8
     flutter_svg: ^2.1.0
     introduction_screen: ^3.1.17

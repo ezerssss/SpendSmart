@@ -23,7 +23,7 @@ void main() async {
 
     AppState().currentUser.value = profile.data() ?? {};
   }
-  
+
   runApp(const SpendSmart());
 }
 
