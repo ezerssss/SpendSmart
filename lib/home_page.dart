@@ -20,18 +20,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   Future<void> handleScan() async {
-    dynamic scannerResult;
+    String uri = await ScannerUtils.scanReceipt();
 
-    try {
-      scannerResult =
-          await FlutterDocScanner().getScanDocumentsUri(page: 1) ??
-          'Unknown platform documents';
-    } on PlatformException {
-      scannerResult = 'Failed to get scanned documents.';
-    }
-
-    if (scannerResult is Map) {
-      String uri = ScannerUtils.extractFileUri(scannerResult["Uri"].toString());
+    if (uri.isNotEmpty && mounted) {
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -66,17 +57,16 @@ class _HomePageState extends State<HomePage> {
             bottomNavIndex == 0
                 ? Column(
                   children: [
-                    Text("SpendSmart"),
                     ElevatedButton(onPressed: signOut, child: Text("Sign out")),
                   ],
                 )
                 : MyReceiptsPage(),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: handleScan,
         shape: const CircleBorder(),
         backgroundColor: AppColors.secondary,
-        child: Icon(Icons.add_rounded, color: AppColors.black),
+        child: Icon(Icons.camera_alt, color: AppColors.black),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: AnimatedBottomNavigationBar.builder(
