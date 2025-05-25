@@ -3,7 +3,13 @@ import 'package:flutter_doc_scanner/flutter_doc_scanner.dart';
 
 class ScannerUtils {
   static String extractFileUri(String data) {
-    return data.split("file://")[1].replaceAll("}]", "");
+    final splitRes = data.split("file://");
+
+    if (splitRes.length < 2) {
+      return "";
+    }
+
+    return splitRes[1].replaceAll("}]", "");
   }
 
   static Future<String> scanReceipt() async {

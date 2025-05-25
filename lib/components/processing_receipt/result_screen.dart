@@ -46,19 +46,6 @@ class _ResultScreenState extends State<ResultScreen> {
     _confetti.dispose();
   }
 
-  void handleRetakePhoto() async {
-    String uri = await ScannerUtils.scanReceipt();
-
-    if (uri.isNotEmpty && mounted) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ProcessingReceiptPage(uri: uri),
-        ),
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -124,35 +111,84 @@ class _ResultScreenState extends State<ResultScreen> {
           ],
         ),
 
-        !widget.isSuccess
-            ? Padding(
-              padding: const EdgeInsets.fromLTRB(30, 0, 30, 200),
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Theme.of(context).colorScheme.secondary,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      padding: EdgeInsets.symmetric(vertical: 12),
-                    ),
-                    onPressed: handleRetakePhoto,
-                    child: Text(
-                      "Retake Photo",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.black,
-                      ),
-                    ),
-                  ),
+        !widget.isSuccess ? RetakePhotoButtons() : Container(),
+      ],
+    );
+  }
+}
+
+class RetakePhotoButtons extends StatelessWidget {
+  const RetakePhotoButtons({super.key});
+
+  void handleRetakePhoto(BuildContext context) async {
+    String uri = await ScannerUtils.scanReceipt();
+
+    if (uri.isNotEmpty && context.mounted) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ProcessingReceiptPage(uri: uri),
+        ),
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 30),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Theme.of(context).colorScheme.secondary,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                padding: EdgeInsets.symmetric(vertical: 12),
+              ),
+              onPressed: () {
+                handleRetakePhoto(context);
+              },
+              child: Text(
+                "Retake Photo",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.black,
                 ),
               ),
-            )
-            : Container(),
-      ],
+            ),
+          ),
+          SizedBox(height: 10),
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(color: Colors.white),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                padding: EdgeInsets.symmetric(vertical: 12),
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text(
+                "Cancel",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ),
+
+          SizedBox(height: 110),
+        ],
+      ),
     );
   }
 }
