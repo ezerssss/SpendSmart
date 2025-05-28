@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spendsmart/processing_reciept_page.dart';
+import 'package:spendsmart/services/openai.dart';
 import 'package:spendsmart/utils/scanner.dart';
 import 'package:spendsmart/my_receipts_page.dart';
 import 'package:spendsmart/app_state.dart';
@@ -18,16 +19,17 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   Future<void> handleScan() async {
-    String uri = await ScannerUtils.scanReceipt();
+    OpenAIService().ha();
+    // String uri = await ScannerUtils.scanReceipt();
 
-    if (uri.isNotEmpty && mounted) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ProcessingReceiptPage(uri: uri),
-        ),
-      );
-    }
+    // if (uri.isNotEmpty && mounted) {
+    //   Navigator.push(
+    //     context,
+    //     MaterialPageRoute(
+    //       builder: (context) => ProcessingReceiptPage(uri: uri),
+    //     ),
+    //   );
+    // }
   }
 
   Future<void> signOut() async {
