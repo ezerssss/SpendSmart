@@ -1,3 +1,4 @@
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:expansion_tile_card/expansion_tile_card.dart';
 
@@ -13,15 +14,15 @@ class AcccordionMessage extends StatefulWidget {
   State<AcccordionMessage> createState() => _AccordionMessageState();
 }
 
-class _AccordionMessageState extends State<AcccordionMessage> {
-  late String? message = "";
-  late int counter = 0;
-
+class _AccordionMessageState extends State<AcccordionMessage>
+    with TickerProviderStateMixin {
+  late String message = "";
+  late bool isFetching = false;
   void fetchResponse() {
-    Future.delayed(Duration(seconds: 2), () {
+    Future.delayed(Duration(seconds: 4), () {
       setState(() {
         message = widget.message;
-        counter++;
+        isFetching = false;
       });
     });
   }
@@ -34,27 +35,41 @@ class _AccordionMessageState extends State<AcccordionMessage> {
       shadowColor: Colors.transparent,
       onExpansionChanged: (isExpanded) {
         if (isExpanded) {
-          fetchResponse();
-        } else {
           setState(() {
-            message = null;
+            isFetching = true;
           });
+          fetchResponse();
         }
       },
       children: <Widget>[
         const Divider(thickness: 1.0, height: 1.0),
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Text(
-              (message ?? "") + "\n\n" + "Fetched times: " + counter.toString(),
-              style: Theme.of(
-                context,
-              ).textTheme.bodyMedium!.copyWith(fontSize: 16),
+        isFetching
+            ? Align(
+              alignment: Alignment.center,
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      "Please wait while the AI is analyzing your data  ",
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    LoadingAnimationWidget.hexagonDots(
+                      color: Colors.white,
+                      size: 12,
+                    ),
+                  ],
+                ),
+              ),
+            )
+            : Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Text(message, style: TextStyle(fontSize: 16)),
+              ),
             ),
-          ),
-        ),
       ],
     );
   }

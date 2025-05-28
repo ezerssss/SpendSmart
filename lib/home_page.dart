@@ -58,7 +58,15 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     ElevatedButton(onPressed: signOut, child: Text("Sign out")),
                     AcccordionMessage(
-                      query: "Test Query",
+                      query: "Test Query 1",
+                      message: "Test message",
+                    ),
+                    AcccordionMessage(
+                      query: "Test Query 2",
+                      message: "Test message",
+                    ),
+                    AcccordionMessage(
+                      query: "Test Query 3",
                       message: "Test message",
                     ),
                   ],
