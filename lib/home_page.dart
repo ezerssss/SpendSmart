@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spendsmart/accordion_message.dart';
 import 'package:spendsmart/my_receipts_page.dart';
 import 'package:spendsmart/app_state.dart';
 import 'package:spendsmart/login_page.dart';
@@ -23,6 +24,9 @@ class _HomePageState extends State<HomePage> {
 
     Navigator.pushReplacement(context, createRoute(LoginPage()));
   }
+
+  final message =
+      "You tend to spend more with Yakult. It seems that you are addicted to it. It can be observed that the Yakult in Green Ribbon is much cheaper than the one in Mercury Drug Store. Perhaps you can try changing where you buy the Yakult.";
 
   @override
   Widget build(BuildContext context) {
@@ -60,6 +64,15 @@ class _HomePageState extends State<HomePage> {
               children: [
                 Text("SpendSmart"),
                 ElevatedButton(onPressed: signOut, child: Text("Sign out")),
+                AcccordionMessage(
+                  query: "How do I save my money with groceries?",
+                  message: message + message + message + message + message,
+                ),
+                AcccordionMessage(
+                  query: "Where do I spend my money the most?",
+                  message: message,
+                ),
+                AcccordionMessage(query: "Any other tips?", message: message),
               ],
             ),
             MyReceiptsPage(),
