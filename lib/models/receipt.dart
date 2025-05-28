@@ -22,6 +22,7 @@ class Receipt {
   final List<Item> items;
   final String date;
   final String imageUrl;
+  final double totalPrice;
 
   Receipt({
     required this.businessName,
@@ -29,6 +30,7 @@ class Receipt {
     required this.items,
     required this.date,
     required this.imageUrl,
+    required this.totalPrice,
   });
 
   static Receipt fromMap(Map<String, dynamic> map) {
@@ -38,6 +40,7 @@ class Receipt {
       items: map["items"],
       date: map["date"],
       imageUrl: map["imageUrl"],
+      totalPrice: map["totalPrice"],
     );
   }
 
@@ -47,13 +50,22 @@ class Receipt {
     }
 
     String now = DateTime.now().toIso8601String();
+    final List<Item> items = [];
+    double total = 0;
+
+    for (final mapItem in map["items"]) {
+      Item item = Item.fromMap(mapItem);
+      items.add(item);
+      total += item.price * item.quantity;
+    }
 
     return Receipt(
       businessName: map["businessName"],
       category: map["category"],
-      items: map["items"],
+      items: items,
       date: now,
       imageUrl: imageUrl,
+      totalPrice: total,
     );
   }
 }

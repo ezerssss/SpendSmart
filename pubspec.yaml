@@ -27,9 +27,8 @@ dependencies:
     firebase_storage: ^12.4.6
     uuid: ^4.5.1
     connectivity_plus: ^6.1.4
-    dart_openai: ^5.1.0
     flutter_dotenv: ^5.2.1
-    flutter_patch_package: ^0.0.11
+    openai_dart: ^0.4.5
 
 dev_dependencies:
     flutter_test:

@@ -19,17 +19,16 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   Future<void> handleScan() async {
-    OpenAIService().ha();
-    // String uri = await ScannerUtils.scanReceipt();
+    String uri = await ScannerUtils.scanReceipt();
 
-    // if (uri.isNotEmpty && mounted) {
-    //   Navigator.push(
-    //     context,
-    //     MaterialPageRoute(
-    //       builder: (context) => ProcessingReceiptPage(uri: uri),
-    //     ),
-    //   );
-    // }
+    if (uri.isNotEmpty && mounted) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ProcessingReceiptPage(uri: uri),
+        ),
+      );
+    }
   }
 
   Future<void> signOut() async {

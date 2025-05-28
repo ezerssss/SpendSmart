@@ -129,14 +129,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.8"
-  dart_openai:
-    dependency: "direct main"
-    description:
-      name: dart_openai
-      sha256: "853bb57fed6a71c3ba0324af5cb40c16d196cf3aa55b91d244964ae4a241ccf1"
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.1.0"
   dbus:
     dependency: transitive
     description:
@@ -342,14 +334,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.0.0"
-  flutter_patch_package:
-    dependency: "direct main"
-    description:
-      name: flutter_patch_package
-      sha256: d24e953a5d223d53fded329e66c9037ddf3ea90f2ee85c730c4c846f287f4738
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.11"
   flutter_shake_animated:
     dependency: "direct main"
     description:
@@ -376,6 +360,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  freezed_annotation:
+    dependency: transitive
+    description:
+      name: freezed_annotation
+      sha256: c2e2d632dd9b8a2b7751117abcfc2b4888ecfe181bd9fca7170d9ef02e595fe2
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.4.4"
   google_identity_services_web:
     dependency: transitive
     description:
@@ -456,6 +448,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.17"
+  json_annotation:
+    dependency: transitive
+    description:
+      name: json_annotation
+      sha256: "1ce844379ca14835a50d2f019a3099f419082cfdd231cd86a142af94dd5c6bb1"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.9.0"
   leak_tracker:
     dependency: transitive
     description:
@@ -528,6 +528,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.5.0"
+  openai_dart:
+    dependency: "direct main"
+    description:
+      name: openai_dart
+      sha256: "1cc5ed0915fa7572b943de01cfa7a3e5cfe1e6a7f4d0d9a9374d046518e84575"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.4.5"
   path:
     dependency: transitive
     description:
