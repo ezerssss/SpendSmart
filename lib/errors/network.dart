@@ -1,3 +1,3 @@
 class NoNetwork implements Exception {
-  String message = "No network connection.";
+  final String message = "No network connection.";
 }
