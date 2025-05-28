@@ -21,12 +21,14 @@ class Receipt {
   final String category;
   final List<Item> items;
   final String date;
+  final String imageUrl;
 
   Receipt({
     required this.businessName,
     required this.category,
     required this.items,
     required this.date,
+    required this.imageUrl,
   });
 
   static Receipt fromMap(Map<String, dynamic> map) {
@@ -35,10 +37,11 @@ class Receipt {
       category: map["category"],
       items: map["items"],
       date: map["date"],
+      imageUrl: map["imageUrl"],
     );
   }
 
-  static Receipt fromOpenAIResponse(Map<String, dynamic> map) {
+  static Receipt fromOpenAIResponse(Map<String, dynamic> map, String imageUrl) {
     if (!map["isValid"]) {
       throw InvalidReceipt(map["message"]);
     }
@@ -50,6 +53,7 @@ class Receipt {
       category: map["category"],
       items: map["items"],
       date: now,
+      imageUrl: imageUrl,
     );
   }
 }
