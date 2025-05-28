@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "483363217342-ofe13ni0bpejadgjh9ani88iru4qk54t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.komsai_marketplace.spend_smart",
+            "certificate_hash": "71cc9ff9ce1d591e3bbfa97ee871bfe2f055db69"
+          }
+        },
+        {
           "client_id": "483363217342-svaqonuvpd11edg9vak5oi19o4uvrdla.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
