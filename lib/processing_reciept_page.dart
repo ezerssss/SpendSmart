@@ -4,6 +4,9 @@ import 'package:spendsmart/components/processing_receipt/loader_screen.dart';
 import 'dart:async';
 
 import 'package:spendsmart/components/processing_receipt/result_screen.dart';
+import 'package:spendsmart/errors/auth.dart';
+import 'package:spendsmart/errors/network.dart';
+import 'package:spendsmart/services/storage.dart';
 
 enum ProcessingStates { uploading, analyzing, success, error }
 
@@ -20,28 +23,57 @@ class _ProcessingReceiptPageState extends State<ProcessingReceiptPage> {
   ProcessingStates currentState = ProcessingStates.uploading;
   String errorMsg =
       "We couldn’t process your receipt this time. Please try again or choose a clearer image.";
+  String imageUrl = "";
+
+  Future<void> uploadReceipt() async {
+    try {
+      final url = await StorageService.uploadImage(widget.uri);
+      setState(() {
+        imageUrl = url;
+        currentState = ProcessingStates.analyzing;
+      });
+    } on NoUser {
+      setState(() {
+        errorMsg =
+            "You need to be logged in to continue. Please sign in and try again.";
+        currentState = ProcessingStates.error;
+      });
+    } on NoNetwork {
+      setState(() {
+        errorMsg =
+            "No internet connection detected. Please check your connection and try again.";
+        currentState = ProcessingStates.error;
+      });
+    } on Exception catch (e) {
+      print(e);
+      setState(() {
+        errorMsg = "Something went wrong on our end. Please try again shortly.";
+        currentState = ProcessingStates.error;
+      });
+    }
+  }
 
   @override
   void initState() {
     super.initState();
+    uploadReceipt();
+  }
 
-    Timer(Duration(seconds: 3), () {
-      setState(() {
-        currentState = ProcessingStates.analyzing;
-      });
+  @override
+  void didUpdateWidget(covariant ProcessingReceiptPage oldWidget) {
+    super.didUpdateWidget(oldWidget);
 
-      Timer(Duration(seconds: 3), () {
-        setState(() {
-          currentState = ProcessingStates.success;
-        });
-
-        Timer(Duration(seconds: 3), () {
-          setState(() {
-            currentState = ProcessingStates.error;
-          });
-        });
-      });
-    });
+    switch (currentState) {
+      case ProcessingStates.uploading:
+        uploadReceipt();
+        break;
+      case ProcessingStates.analyzing:
+        print("Analyzing");
+      case ProcessingStates.success:
+        print("Success");
+      case ProcessingStates.error:
+        print("Error");
+    }
   }
 
   Widget getScreen() {
