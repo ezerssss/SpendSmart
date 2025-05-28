@@ -24,6 +24,6 @@ Handwritten receipt: "Only printed commercial receipts are supported. Handwritte
 Too small to read: "This image is too small to read. Try zooming in or using a higher-resolution photo."
 
 Return JSON only.
-""";
+""".trim();
 
 String aiModel = "gpt-4o-mini-2024-07-18";
