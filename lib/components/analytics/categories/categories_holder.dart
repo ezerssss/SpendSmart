@@ -14,12 +14,12 @@ class CategoriesHolder extends StatefulWidget {
 }
 
 class _CategoriesHolderState extends State<CategoriesHolder> {
-  String selectedPeriod = 'THIS MONTH';
+  String selectedPeriod = 'THIS WEEK';
   bool isVerticalLayout = false;
 
   final Map<String, String> dummyAmounts = {
-    'THIS MONTH': 'PHP 1,000',
     'THIS WEEK': 'PHP 250',
+    'THIS MONTH': 'PHP 1,000',
     'THIS YEAR': 'PHP 12,000',
   };
 
@@ -112,12 +112,12 @@ class _CategoriesHolderState extends State<CategoriesHolder> {
                       itemBuilder:
                           (item) => [
                             const PopupMenuItem(
-                              value: 'This Month',
-                              child: Text("This Month"),
+                              value: 'This Week',
+                              child: Text("This Week"),
                             ),
                             const PopupMenuItem(
-                              value: 'This Week',
-                              child: Text('This Week'),
+                              value: 'This Month',
+                              child: Text('This Month'),
                             ),
                             const PopupMenuItem(
                               value: 'This Year',
