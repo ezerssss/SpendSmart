@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:spendsmart/models/receipt.dart';
 
 class FirestoreService {
   static final FirebaseFirestore _db = FirebaseFirestore.instance;
@@ -17,6 +18,7 @@ class FirestoreService {
           "displayName": user.displayName,
           "email": user.email,
           "isOnboarded": false,
+          "monthlyBudget": 10000,
         };
 
         await docRef.set(userData);
@@ -39,5 +41,27 @@ class FirestoreService {
       log('exception->$e');
       rethrow;
     }
+  }
+
+  static Future<List<Receipt>> getReceipts(
+    String userId, {
+    int? maxLimit,
+  }) async {
+    final receiptsCollectionRef = _db
+        .collection("users")
+        .doc(userId)
+        .collection("receipts");
+
+    var query = receiptsCollectionRef.orderBy("date");
+
+    if (maxLimit != null) {
+      query.limit(maxLimit);
+    }
+
+    final res = await query.get();
+
+    List<Receipt> receipts =
+        res.docs.map((doc) => Receipt.fromMap(doc.data())).toList();
+    return receipts;
   }
 }
