@@ -1,6 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'full_image.dart';
+import 'package:spendsmart/services/firestore.dart';
+import 'package:spendsmart/services/auth.dart';
+import 'models/receipt.dart';
 
 class MyReceiptsPage extends StatefulWidget {
   const MyReceiptsPage({super.key});
@@ -9,14 +14,8 @@ class MyReceiptsPage extends StatefulWidget {
   State<MyReceiptsPage> createState() => _MyReceiptsPageState();
 }
 
-class MockData {
-  static String receiptName = "Merchant Store";
-  static DateTime date = DateTime.now();
-  static double totalSpent = 1000;
-}
-
 class _MyReceiptsPageState extends State<MyReceiptsPage> {
-  Card getCard() {
+  Card getCard(Receipt receipt) {
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
@@ -25,7 +24,7 @@ class _MyReceiptsPageState extends State<MyReceiptsPage> {
           width: 1,
         ),
       ),
-      margin: EdgeInsets.all(0),
+      margin: EdgeInsets.fromLTRB(5, 10, 5, 0),
       child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Row(
@@ -34,8 +33,16 @@ class _MyReceiptsPageState extends State<MyReceiptsPage> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(MockData.receiptName),
-                Text(DateFormat('MMMM d, y, h:mm a').format(MockData.date)),
+                Text(
+                  receipt.businessName,
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                ),
+                Text(receipt.category),
+                Text(
+                  DateFormat(
+                    'MMMM d, y, h:mm a',
+                  ).format(DateTime.parse(receipt.date).toLocal()),
+                ),
               ],
             ),
             Column(
@@ -43,9 +50,10 @@ class _MyReceiptsPageState extends State<MyReceiptsPage> {
 
               children: [
                 Text(
-                  "₱${MockData.totalSpent}",
-                  style: TextStyle(fontFamily: 'Roboto'),
+                  "₱${receipt.totalPrice}",
+                  style: TextStyle(fontFamily: 'Roboto', fontSize: 16),
                 ),
+                Text(""),
                 Text(
                   "press to see receipt",
                   style: TextStyle(
@@ -82,42 +90,102 @@ class _MyReceiptsPageState extends State<MyReceiptsPage> {
     );
   }
 
-  var mockReceipts = [];
+  Widget getLoading() {
+    return Container(
+      alignment: Alignment.center,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          LoadingAnimationWidget.hexagonDots(color: Colors.white, size: 20),
+          Text(
+            "Fetching your receipts from the database  ",
+            style: TextStyle(fontSize: 16),
+          ),
+        ],
+      ),
+    );
+  }
 
+  late String? userId;
+  late CollectionReference receiptsRef;
+  late Stream<QuerySnapshot> receiptStream;
   @override
   void initState() {
     super.initState();
-    for (int i = 0; i < 10; i++) {
-      mockReceipts = [...mockReceipts, '$i'];
-    }
+    userId = AuthService.auth.currentUser?.uid;
+    receiptsRef = FirestoreService.db
+        .collection("users")
+        .doc(userId)
+        .collection("receipts");
+
+    receiptStream = receiptsRef.snapshots();
   }
 
   @override
   Widget build(BuildContext context) {
-    return mockReceipts.isEmpty
-        ? noReceipts()
-        : ListView.builder(
-          itemCount: mockReceipts.length,
-          itemBuilder: (context, index) {
-            return ListTile(
-              title: InkWell(
-                child: getCard(),
-                onTap:
-                    () => {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) {
-                            return FullReceiptImage(
-                              imageUrl: "https://picsum.photos/200/300",
-                            );
-                          },
-                        ),
-                      ),
-                    },
+    return StreamBuilder<QuerySnapshot>(
+      stream: receiptStream,
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasError) {
+          return const Text('Something went wrong');
+        }
+
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return getLoading();
+        }
+
+        if (snapshot.data!.docs.isEmpty) {
+          return noReceipts();
+        }
+
+        return Column(
+          children: [
+            Container(
+              alignment: Alignment.bottomLeft,
+              padding: EdgeInsets.only(left: 20, top: 30, bottom: 10),
+              child: Text(
+                "My Receipts",
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
               ),
-            );
-          },
+            ),
+            Divider(),
+            Expanded(
+              child: ListView(
+                shrinkWrap: true,
+                children:
+                    snapshot.data!.docs
+                        .map((DocumentSnapshot document) {
+                          Receipt receipt = Receipt.fromMap(
+                            document.data()! as Map<String, dynamic>,
+                          );
+                          return InkWell(
+                            child: getCard(receipt),
+                            onTap:
+                                () => {
+                                  //route here to form
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) {
+                                        return FullReceiptImage(
+                                          imageUrl: receipt.imageUrl,
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                },
+                          );
+                        })
+                        .toList()
+                        .cast(),
+              ),
+            ),
+          ],
         );
+      },
+    );
   }
 }
