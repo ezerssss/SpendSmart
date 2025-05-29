@@ -40,36 +40,48 @@ class ReceiptForm extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              receipt.businessName,
-              style: const TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
+            Center(
+              child: Text(
+                receipt.businessName,
+                style: const TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
+                ),
               ),
             ),
-            const SizedBox(height: 6),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-              decoration: BoxDecoration(
-                color: const Color(0xFFFDF4EC),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Text(
-                receipt.category,
-                style: const TextStyle(
-                  color: AppColors.secondary,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 13,
+            const SizedBox(height: 8),
+
+            Center(
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 4,
+                ),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFFDF4EC),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Text(
+                  receipt.category,
+                  style: const TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.secondary,
+                  ),
                 ),
               ),
             ),
             const SizedBox(height: 6),
-            Text(
-              DateFormat('MMM d, yyyy h:mm a').format(receiptDate),
-              style: const TextStyle(color: Colors.grey, fontSize: 12),
+
+            Center(
+              child: Text(
+                DateFormat('MMM d, yyyy h:mm a').format(receiptDate),
+                style: const TextStyle(color: Colors.grey, fontSize: 12),
+              ),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 16),
+
             Divider(color: Colors.grey.shade300, thickness: 1),
             Align(
               alignment: Alignment.centerLeft,
@@ -78,6 +90,7 @@ class ReceiptForm extends StatelessWidget {
                 child: Text(
                   "Items",
                   style: TextStyle(
+                    fontSize: 14,
                     fontWeight: FontWeight.bold,
                     color: Colors.black87,
                   ),
@@ -126,43 +139,42 @@ class ReceiptForm extends StatelessWidget {
               ),
             ),
             Divider(color: Colors.grey.shade300, thickness: 1),
-            Padding(
-              padding: const EdgeInsets.only(top: 8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    "Total",
-                    style: TextStyle(
-                      fontSize: AppTextSize.title,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black87,
+            const SizedBox(height: 8),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  "Total",
+                  style: TextStyle(
+                    fontSize: AppTextSize.title,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
+                  ),
+                ),
+                Row(
+                  children: [
+                    Text(
+                      "₱",
+                      style: const TextStyle(
+                        fontFamily: 'Roboto',
+                        fontSize: AppTextSize.title,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black87,
+                      ),
                     ),
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        "₱",
-                        style: const TextStyle(
-                          fontFamily: 'Roboto',
-                          fontSize: AppTextSize.title,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black87,
-                        ),
+                    Text(
+                      total.toStringAsFixed(2),
+                      style: const TextStyle(
+                        fontSize: AppTextSize.title,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black87,
                       ),
-                      Text(
-                        total.toStringAsFixed(2),
-                        style: const TextStyle(
-                          fontSize: AppTextSize.title,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black87,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+                    ),
+                  ],
+                ),
+              ],
             ),
+            const SizedBox(height: 8),
           ],
         ),
       ),
