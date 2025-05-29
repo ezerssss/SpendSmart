@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spendsmart/components/analytics/categories/categories_holder.dart';
 import 'package:spendsmart/processing_reciept_page.dart';
+import 'package:spendsmart/receipt_page.dart';
 import 'package:spendsmart/services/openai.dart';
 import 'package:spendsmart/utils/scanner.dart';
 import 'package:spendsmart/my_receipts_page.dart';
@@ -58,7 +59,14 @@ class _HomePageState extends State<HomePage> {
             bottomNavIndex == 0
                 ? Column(
                   children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(context, createRoute(ReceiptPage()));
+                      },
+                      child: Text("Receipt Result"),
+                    ),
                     ElevatedButton(onPressed: signOut, child: Text("Sign out")),
+
                     SizedBox(
                       child: CategoriesHolder(chart: const CategoriesChart()),
                     ),

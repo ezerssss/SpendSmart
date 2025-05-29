@@ -8,7 +8,6 @@ import 'package:spendsmart/home_page.dart';
 import 'package:spendsmart/login_page.dart';
 import 'package:spendsmart/styles.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:spendsmart/receipt_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,8 +41,7 @@ class SpendSmart extends StatelessWidget {
           title: 'Spend Smart',
           theme: AppThemes.theme,
           debugShowCheckedModeBanner: false,
-          // home: user.isNotEmpty ? const HomePage() : const LoginPage(),
-          home: ReceiptPage(),
+          home: user.isNotEmpty ? const HomePage() : const LoginPage(),
         );
       },
     );

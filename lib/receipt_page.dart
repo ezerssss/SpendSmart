@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spendsmart/models/receipt.dart';
 import 'package:spendsmart/styles.dart';
 import 'package:intl/intl.dart';
+import 'package:spendsmart/utils/transitions.dart';
 
 class ReceiptForm extends StatelessWidget {
   ReceiptForm({super.key});
@@ -206,7 +207,7 @@ class ReceiptPage extends StatelessWidget {
           child: Column(
             spacing: 16,
             children: [
-              ReceiptForm(),
+              ReceiptRevealAnimation(child: ReceiptForm()),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
