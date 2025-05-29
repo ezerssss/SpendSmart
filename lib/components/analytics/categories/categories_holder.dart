@@ -1,5 +1,3 @@
-// Updated CategoriesHolder with AppColors applied to chart and legend colors
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spendsmart/components/analytics/categories/legend_row.dart';
@@ -95,7 +93,7 @@ class _CategoriesHolderState extends State<CategoriesHolder> {
                     Padding(
                       padding: const EdgeInsets.only(left: 8.0),
                       child: Text(
-                        'Categories',
+                        'Spendings',
                         style: const TextStyle(
                           color: AppColors.white,
                           fontSize: 18,
