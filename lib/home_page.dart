@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spendsmart/processing_reciept_page.dart';
+import 'package:spendsmart/services/openai.dart';
 import 'package:spendsmart/utils/scanner.dart';
 import 'package:spendsmart/my_receipts_page.dart';
 import 'package:spendsmart/app_state.dart';
