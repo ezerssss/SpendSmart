@@ -67,9 +67,14 @@ class _HomePageState extends State<HomePage> {
                       SizedBox(
                         child: CategoriesHolder(chart: const CategoriesChart()),
                       ),
-                      AcccordionMessage(query: "test query 1"),
-                      AcccordionMessage(query: "test query 2"),
-                      AcccordionMessage(query: "test query 3"),
+                      AcccordionMessage(query: "Where Am I Overspending?"),
+                      AcccordionMessage(
+                        query: "How Can I Improve My Budgeting?",
+                      ),
+                      AcccordionMessage(query: "What Are My Spending Trends?"),
+                      AcccordionMessage(
+                        query: "Money-Saving Suggestions for This Week",
+                      ),
                     ],
                   ),
                 )
