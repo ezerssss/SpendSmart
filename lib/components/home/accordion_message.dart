@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:expansion_tile_card/expansion_tile_card.dart';
+import '../../services/openai.dart';
 
 class AcccordionMessage extends StatefulWidget {
   final String query;
@@ -16,21 +17,15 @@ class _AccordionMessageState extends State<AcccordionMessage>
   late String message = "";
   late bool isFetching = false;
   late bool hasFetched = false;
-  late Timer timer = Timer(Duration(seconds: 0), () {});
   void fetchResponse() {
-    timer = Timer(Duration(seconds: 4), () {
+    OpenAIService.generateTip(widget.query).then((value) {
+      if (!mounted) return;
       setState(() {
-        message = "test message";
         isFetching = false;
         hasFetched = true;
+        message = value;
       });
     });
-  }
-
-  @override
-  void dispose() {
-    timer.cancel();
-    super.dispose();
   }
 
   @override
