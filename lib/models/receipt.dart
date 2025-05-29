@@ -14,6 +14,10 @@ class Item {
       quantity: map["quantity"],
     );
   }
+
+  static Map<String, dynamic> toMap(Item item) {
+    return {"name": item.name, "price": item.price, "quantity": item.quantity};
+  }
 }
 
 class Receipt {
@@ -42,6 +46,22 @@ class Receipt {
       imageUrl: map["imageUrl"],
       totalPrice: map["totalPrice"],
     );
+  }
+
+  static Map<String, dynamic> toMap(Receipt receipt) {
+    List<Map<String, dynamic>> itemsListMap =
+        receipt.items.map((item) {
+          return Item.toMap(item);
+        }).toList();
+
+    return {
+      "businessName": receipt.businessName,
+      "category": receipt.category,
+      "items": itemsListMap,
+      "date": receipt.date,
+      "imageUrl": receipt.imageUrl,
+      "totalPrice": receipt.totalPrice,
+    };
   }
 
   static Receipt fromOpenAIResponse(Map<String, dynamic> map, String imageUrl) {
