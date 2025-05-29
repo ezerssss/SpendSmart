@@ -3,7 +3,6 @@ import 'package:fl_chart/fl_chart.dart';
 
 class CategoriesChart extends StatefulWidget {
   const CategoriesChart({super.key});
-
   @override
   State<CategoriesChart> createState() => CategoriesChartState();
 }
