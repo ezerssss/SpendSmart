@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spendsmart/components/analytics/categories/categories_holder.dart';
+import 'package:spendsmart/components/home/accordion_message.dart';
 import 'package:spendsmart/processing_reciept_page.dart';
 import 'package:spendsmart/services/openai.dart';
 import 'package:spendsmart/utils/scanner.dart';
@@ -56,13 +57,21 @@ class _HomePageState extends State<HomePage> {
       body: SafeArea(
         child:
             bottomNavIndex == 0
-                ? Column(
-                  children: [
-                    ElevatedButton(onPressed: signOut, child: Text("Sign out")),
-                    SizedBox(
-                      child: CategoriesHolder(chart: const CategoriesChart()),
-                    ),
-                  ],
+                ? SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      ElevatedButton(
+                        onPressed: signOut,
+                        child: Text("Sign out"),
+                      ),
+                      SizedBox(
+                        child: CategoriesHolder(chart: const CategoriesChart()),
+                      ),
+                      AcccordionMessage(query: "test query 1"),
+                      AcccordionMessage(query: "test query 2"),
+                      AcccordionMessage(query: "test query 3"),
+                    ],
+                  ),
                 )
                 : MyReceiptsPage(),
       ),
