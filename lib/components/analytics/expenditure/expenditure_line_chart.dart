@@ -32,6 +32,12 @@ class _ExpenditureLineState extends State<ExpenditureLineChart> {
 
   PeriodEnum selectedPeriod = PeriodEnum.week;
 
+  final Map<PeriodEnum, String> dummyAmounts = <PeriodEnum, String>{
+    PeriodEnum.week: 'PHP 250',
+    PeriodEnum.month: 'PHP 1,000',
+    PeriodEnum.year: 'PHP 12,000',
+  };
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -39,7 +45,17 @@ class _ExpenditureLineState extends State<ExpenditureLineChart> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Spacer(),
+            Padding(
+              padding: const EdgeInsets.only(left: 15, top: 1.5),
+              child: Text(
+                dummyAmounts[selectedPeriod] ?? '',
+                style: const TextStyle(
+                  color: AppColors.white,
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
             PopupMenuButton<PeriodEnum>(
               icon: const Icon(Icons.more_vert, color: AppColors.white),
               color: AppColors.black,
