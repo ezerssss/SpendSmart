@@ -38,14 +38,16 @@ class Receipt {
   });
 
   static Receipt fromMap(Map<String, dynamic> map) {
-    final List<Item> listItem = [];
-    for (var item in map["items"]) {
-      listItem.add(Item.fromMap(item));
+    final List<Item> items = [];
+
+    for (final item in map["items"]) {
+      items.add(Item.fromMap(item));
     }
+
     return Receipt(
       businessName: map["businessName"],
       category: map["category"],
-      items: listItem,
+      items: items,
       date: map["date"],
       imageUrl: map["imageUrl"],
       totalPrice: map["totalPrice"],

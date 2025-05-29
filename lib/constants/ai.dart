@@ -26,4 +26,7 @@ Too small to read: "This image is too small to read. Try zooming in or using a h
 Return JSON only.
 """.trim();
 
+String personalizedTipsSystemPrompt =
+    "You are a helpful financial assistant. Based on the user's spending data, analyze their expenses and provide personalized financial tips. Tailor your advice to the specific question being asked. Be concise, practical, and friendly. 4 MAXIMUM SENTENCES STRICTLY. RESPOND IN PLAIN TEXT WITH NO FORMATTING WHATSOEVER.";
+
 String aiModel = "gpt-4o-mini-2024-07-18";
