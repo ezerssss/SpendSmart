@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spendsmart/components/analytics/categories/legend_row.dart';
+import 'package:spendsmart/components/analytics/period_enum.dart';
 import 'package:spendsmart/styles.dart';
 import 'categories_chart.dart';
 
@@ -14,13 +15,13 @@ class CategoriesHolder extends StatefulWidget {
 }
 
 class _CategoriesHolderState extends State<CategoriesHolder> {
-  String selectedPeriod = 'THIS WEEK';
+  PeriodEnum selectedPeriod = PeriodEnum.week;
   bool isVerticalLayout = false;
 
-  final Map<String, String> dummyAmounts = {
-    'THIS WEEK': 'PHP 250',
-    'THIS MONTH': 'PHP 1,000',
-    'THIS YEAR': 'PHP 12,000',
+  final Map<PeriodEnum, String> dummyAmounts = <PeriodEnum, String>{
+    PeriodEnum.week: 'PHP 250',
+    PeriodEnum.month: 'PHP 1,000',
+    PeriodEnum.year: 'PHP 12,000',
   };
 
   List<String> categoryLabels = [
@@ -101,36 +102,29 @@ class _CategoriesHolderState extends State<CategoriesHolder> {
                         ),
                       ),
                     ),
-                    PopupMenuButton<String>(
+                    PopupMenuButton<PeriodEnum>(
                       icon: const Icon(Icons.more_vert, color: AppColors.white),
                       color: AppColors.black,
-                      onSelected: (value) {
+                      onSelected: (period) {
                         setState(() {
-                          selectedPeriod = value.toUpperCase();
+                          selectedPeriod = period;
                         });
                       },
                       itemBuilder:
-                          (item) => [
-                            const PopupMenuItem(
-                              value: 'This Week',
-                              child: Text("This Week"),
-                            ),
-                            const PopupMenuItem(
-                              value: 'This Month',
-                              child: Text('This Month'),
-                            ),
-                            const PopupMenuItem(
-                              value: 'This Year',
-                              child: Text('This Year'),
-                            ),
-                          ],
+                          (_) =>
+                              PeriodEnum.values.map((p) {
+                                return PopupMenuItem(
+                                  value: p,
+                                  child: Text(p.periodLabel),
+                                );
+                              }).toList(),
                     ),
                   ],
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 8.0),
                   child: Text(
-                    selectedPeriod,
+                    selectedPeriod.periodLabel,
                     style: const TextStyle(
                       color: AppColors.onWhite,
                       fontSize: 12,
@@ -229,9 +223,7 @@ class _CategoriesHolderState extends State<CategoriesHolder> {
                             ? 'Long press to reduce'
                             : 'Long press to see other categories',
                         textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: AppColors.onWhite.withOpacity(0.8),
-                        ),
+                        style: TextStyle(color: AppColors.onWhite),
                       ),
                     ],
                   ),
