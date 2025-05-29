@@ -5,87 +5,89 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-    sdk: ^3.7.2
+  sdk: ^3.7.2
 
 dependencies:
-    flutter:
-        sdk: flutter
-    photo_view: ^0.15.0
-    intl: ^0.20.2
-    cupertino_icons: ^1.0.8
-    flutter_svg: ^2.1.0
-    introduction_screen: ^3.1.17
-    firebase_auth: ^5.5.4
-    google_sign_in: ^6.3.0
-    firebase_core: ^3.13.1
-    cloud_firestore: ^5.6.8
-    animated_bottom_navigation_bar: ^1.4.0
-    flutter_doc_scanner: ^0.0.16
-    loading_animation_widget: ^1.3.0
-    confetti: ^0.8.0
-    flutter_shake_animated: ^0.0.5
-    fl_chart: ^1.0.0
-    firebase_storage: ^12.4.6
-    uuid: ^4.5.1
-    connectivity_plus: ^6.1.4
-    flutter_dotenv: ^5.2.1
-    openai_dart: ^0.4.5
+  flutter:
+    sdk: flutter
+  photo_view: ^0.15.0
+  intl: ^0.20.2
+  cupertino_icons: ^1.0.8
+  flutter_svg: ^2.1.0
+  introduction_screen: ^3.1.17
+  firebase_auth: ^5.5.4
+  google_sign_in: ^6.3.0
+  firebase_core: ^3.13.1
+  cloud_firestore: ^5.6.8
+  animated_bottom_navigation_bar: ^1.4.0
+  flutter_doc_scanner: ^0.0.16
+  loading_animation_widget: ^1.3.0
+  confetti: ^0.8.0
+  flutter_shake_animated: ^0.0.5
+  fl_chart: ^1.0.0
+  firebase_storage: ^12.4.6
+  uuid: ^4.5.1
+  connectivity_plus: ^6.1.4
+  flutter_dotenv: ^5.2.1
+  openai_dart: ^0.4.5
+  expansion_tile_card: ^3.0.0
 
 dev_dependencies:
-    flutter_test:
-        sdk: flutter
-    flutter_lints: ^5.0.0
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
 
 flutter:
-    uses-material-design: true
+  uses-material-design:
+    true
 
     # To add assets to your application, add an assets section, like this:
-    assets:
-        - .env
-        - assets/
+  assets:
+    - .env
+    - assets/
 
-    # An image asset can refer to one or more resolution-specific "variants", see
-    # https://flutter.dev/to/resolution-aware-images
+  # An image asset can refer to one or more resolution-specific "variants", see
+  # https://flutter.dev/to/resolution-aware-images
 
-    # For details regarding adding assets from package dependencies, see
-    # https://flutter.dev/to/asset-from-package
+  # For details regarding adding assets from package dependencies, see
+  # https://flutter.dev/to/asset-from-package
 
-    # To add custom fonts to your application, add a fonts section here,
-    # in this "flutter" section. Each entry in this list should have a
-    # "family" key with the font family name, and a "fonts" key with a
-    # list giving the asset and other descriptors for the font. For
-    # example:
-    fonts:
-        - family: Poppins
-          fonts:
-              - asset: assets/fonts/Poppins-Black.ttf
-                weight: 900
-              - asset: assets/fonts/Poppins-BlackItalic.ttf
-                weight: 900
-                style: italic
-              - asset: assets/fonts/Poppins-Bold.ttf
-                weight: 700
-              - asset: assets/fonts/Poppins-BoldItalic.ttf
-                weight: 700
-                style: italic
-              - asset: assets/fonts/Poppins-ExtraBold.ttf
-                weight: 800
-              - asset: assets/fonts/Poppins-ExtraBoldItalic.ttf
-                weight: 800
-                style: italic
-              - asset: assets/fonts/Poppins-Light.ttf
-                weight: 300
-              - asset: assets/fonts/Poppins-LightItalic.ttf
-                weight: 300
-                style: italic
-              - asset: assets/fonts/Poppins-SemiBold.ttf
-                weight: 600
-              - asset: assets/fonts/Poppins-SemiBoldItalic.ttf
-                weight: 600
-                style: italic
-              - asset: assets/fonts/Poppins-Regular.ttf
-              - asset: assets/fonts/Poppins-Italic.ttf
-                style: italic
-    #
-    # For details regarding fonts from package dependencies,
-    # see https://flutter.dev/to/font-from-package
+  # To add custom fonts to your application, add a fonts section here,
+  # in this "flutter" section. Each entry in this list should have a
+  # "family" key with the font family name, and a "fonts" key with a
+  # list giving the asset and other descriptors for the font. For
+  # example:
+  fonts:
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/Poppins-Black.ttf
+          weight: 900
+        - asset: assets/fonts/Poppins-BlackItalic.ttf
+          weight: 900
+          style: italic
+        - asset: assets/fonts/Poppins-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Poppins-BoldItalic.ttf
+          weight: 700
+          style: italic
+        - asset: assets/fonts/Poppins-ExtraBold.ttf
+          weight: 800
+        - asset: assets/fonts/Poppins-ExtraBoldItalic.ttf
+          weight: 800
+          style: italic
+        - asset: assets/fonts/Poppins-Light.ttf
+          weight: 300
+        - asset: assets/fonts/Poppins-LightItalic.ttf
+          weight: 300
+          style: italic
+        - asset: assets/fonts/Poppins-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Poppins-SemiBoldItalic.ttf
+          weight: 600
+          style: italic
+        - asset: assets/fonts/Poppins-Regular.ttf
+        - asset: assets/fonts/Poppins-Italic.ttf
+          style: italic
+  #
+  # For details regarding fonts from package dependencies,
+  # see https://flutter.dev/to/font-from-package
