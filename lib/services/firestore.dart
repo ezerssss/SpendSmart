@@ -5,11 +5,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:spendsmart/models/receipt.dart';
 
 class FirestoreService {
-  static final FirebaseFirestore _db = FirebaseFirestore.instance;
+  static final FirebaseFirestore db = FirebaseFirestore.instance;
 
   static Future<Map<String, dynamic>> addUser(User user) async {
     try {
-      final docRef = _db.collection("users").doc(user.uid);
+      final docRef = db.collection("users").doc(user.uid);
       final userDoc = await docRef.get();
 
       if (!userDoc.exists) {
@@ -34,7 +34,7 @@ class FirestoreService {
 
   static Future<void> completeOnboarding(String userId) async {
     try {
-      final docRef = _db.collection("users").doc(userId);
+      final docRef = db.collection("users").doc(userId);
 
       await docRef.update({"isOnboarded": true});
     } on Exception catch (e) {
@@ -47,7 +47,7 @@ class FirestoreService {
     String userId, {
     int? maxLimit,
   }) async {
-    final receiptsCollectionRef = _db
+    final receiptsCollectionRef = db
         .collection("users")
         .doc(userId)
         .collection("receipts");
