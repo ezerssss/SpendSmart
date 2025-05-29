@@ -7,10 +7,12 @@ import 'package:spendsmart/firebase_options.dart';
 import 'package:spendsmart/home_page.dart';
 import 'package:spendsmart/login_page.dart';
 import 'package:spendsmart/styles.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await dotenv.load();
 
   final currentUser = FirebaseAuth.instance.currentUser;
 

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:spendsmart/components/analytics/categories/categories_holder.dart';
 import 'package:spendsmart/processing_reciept_page.dart';
+import 'package:spendsmart/services/openai.dart';
 import 'package:spendsmart/utils/scanner.dart';
 import 'package:spendsmart/my_receipts_page.dart';
 import 'package:spendsmart/app_state.dart';
@@ -8,6 +10,7 @@ import 'package:spendsmart/services/auth.dart';
 import 'package:spendsmart/styles.dart';
 import 'package:spendsmart/utils/transitions.dart';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
+import 'package:spendsmart/components/analytics/categories/categories_chart.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -56,6 +59,9 @@ class _HomePageState extends State<HomePage> {
                 ? Column(
                   children: [
                     ElevatedButton(onPressed: signOut, child: Text("Sign out")),
+                    SizedBox(
+                      child: CategoriesHolder(chart: const CategoriesChart()),
+                    ),
                   ],
                 )
                 : MyReceiptsPage(),
