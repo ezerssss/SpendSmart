@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spendsmart/accordion_message.dart';
 import 'package:spendsmart/processing_reciept_page.dart';
 import 'package:spendsmart/utils/scanner.dart';
 import 'package:spendsmart/my_receipts_page.dart';
@@ -57,18 +56,6 @@ class _HomePageState extends State<HomePage> {
                 ? Column(
                   children: [
                     ElevatedButton(onPressed: signOut, child: Text("Sign out")),
-                    AcccordionMessage(
-                      query: "Test Query 1",
-                      message: "Test message",
-                    ),
-                    AcccordionMessage(
-                      query: "Test Query 2",
-                      message: "Test message",
-                    ),
-                    AcccordionMessage(
-                      query: "Test Query 3",
-                      message: "Test message",
-                    ),
                   ],
                 )
                 : MyReceiptsPage(),

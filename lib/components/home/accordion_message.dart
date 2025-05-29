@@ -1,15 +1,12 @@
+import 'dart:async';
+
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:expansion_tile_card/expansion_tile_card.dart';
 
 class AcccordionMessage extends StatefulWidget {
   final String query;
-  final String message;
-  const AcccordionMessage({
-    super.key,
-    required this.query,
-    required this.message,
-  });
+  const AcccordionMessage({super.key, required this.query});
   @override
   State<AcccordionMessage> createState() => _AccordionMessageState();
 }
@@ -18,13 +15,22 @@ class _AccordionMessageState extends State<AcccordionMessage>
     with TickerProviderStateMixin {
   late String message = "";
   late bool isFetching = false;
+  late bool hasFetched = false;
+  late Timer timer = Timer(Duration(seconds: 0), () {});
   void fetchResponse() {
-    Future.delayed(Duration(seconds: 4), () {
+    timer = Timer(Duration(seconds: 4), () {
       setState(() {
-        message = widget.message;
+        message = "test message";
         isFetching = false;
+        hasFetched = true;
       });
     });
+  }
+
+  @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
   }
 
   @override
@@ -34,7 +40,7 @@ class _AccordionMessageState extends State<AcccordionMessage>
       borderRadius: const BorderRadius.all(Radius.zero),
       shadowColor: Colors.transparent,
       onExpansionChanged: (isExpanded) {
-        if (isExpanded) {
+        if (isExpanded && !hasFetched) {
           setState(() {
             isFetching = true;
           });
