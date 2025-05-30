@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:spendsmart/app_state.dart';
-import 'package:spendsmart/components/analytics/expenditure/axis_builder.dart';
 import 'package:spendsmart/components/analytics/period_enum.dart';
 import 'package:spendsmart/errors/auth.dart';
 import 'package:spendsmart/services/firestore.dart';
