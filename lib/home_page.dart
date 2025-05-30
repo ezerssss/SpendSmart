@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spendsmart/components/analytics/categories/categories_holder.dart';
 import 'package:spendsmart/components/analytics/expenditure/expenditure_holder.dart';
 import 'package:spendsmart/components/analytics/expenditure/expenditure_line_chart.dart';
 import 'package:spendsmart/components/home/accordion_message.dart';
@@ -68,9 +67,7 @@ class _HomePageState extends State<HomePage> {
                         child: Text("Sign out"),
                       ),
 
-                      SizedBox(
-                        child: CategoriesHolder(chart: const CategoriesChart()),
-                      ),
+                      SizedBox(child: const CategoriesChart()),
                       SizedBox(
                         child: ExpenditureHolder(
                           chart: const ExpenditureLineChart(),
