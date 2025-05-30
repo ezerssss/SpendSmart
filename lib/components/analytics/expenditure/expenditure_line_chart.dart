@@ -5,6 +5,7 @@ import 'package:spendsmart/components/analytics/period_enum.dart';
 import 'package:spendsmart/errors/auth.dart';
 import 'package:spendsmart/services/firestore.dart';
 import 'package:spendsmart/styles.dart';
+import 'dart:math';
 
 class ExpenditureLineChart extends StatefulWidget {
   const ExpenditureLineChart({super.key});
@@ -15,10 +16,10 @@ class ExpenditureLineChart extends StatefulWidget {
 
 class _ExpenditureLineState extends State<ExpenditureLineChart> {
   List<Color> colorPalette = [AppColors.primary, AppColors.secondary];
-
   List<FlSpot> weeklySpots = [];
   List<FlSpot> monthlySpots = [];
   List<FlSpot> yearlySpots = [];
+
   Map<PeriodEnum, double> periodTotals = {
     PeriodEnum.week: 0,
     PeriodEnum.month: 0,
@@ -27,11 +28,7 @@ class _ExpenditureLineState extends State<ExpenditureLineChart> {
 
   PeriodEnum selectedPeriod = PeriodEnum.week;
 
-  final Map<PeriodEnum, String> dummyAmounts = <PeriodEnum, String>{
-    PeriodEnum.week: 'PHP 250',
-    PeriodEnum.month: 'PHP 1,000',
-    PeriodEnum.year: 'PHP 12,000',
-  };
+  double monthlyBudget = 0;
 
   @override
   void initState() {
@@ -42,7 +39,7 @@ class _ExpenditureLineState extends State<ExpenditureLineChart> {
   Future<void> loadReceipts() async {
     final user = AppState().currentUser.value;
     if (user.isEmpty) throw NoUser();
-
+    monthlyBudget = (user['monthlyBudget'] as num).toDouble();
     final userId = user['uid'] as String;
     final receipts = await FirestoreService.getReceipts(userId);
     final dateToday = DateTime.now();
@@ -167,17 +164,29 @@ class _ExpenditureLineState extends State<ExpenditureLineChart> {
   }
 
   LineChartData getChartData() {
+    final budgetLine = HorizontalLine(
+      y: monthlyBudget,
+      color: colorPalette[0],
+      strokeWidth: 2,
+      dashArray: [6, 3],
+    );
     switch (selectedPeriod) {
       case PeriodEnum.month:
         return baseLineData(
           monthlySpots,
           monthlySpots.length - 1,
           disableTouch: true,
+          horizontalLines: [budgetLine],
         );
       case PeriodEnum.year:
-        return baseLineData(yearlySpots, 11, xTicks: 2);
+        return baseLineData(
+          yearlySpots,
+          11,
+          xTicks: 2,
+          horizontalLines: [budgetLine],
+        );
       default:
-        return baseLineData(weeklySpots, 6);
+        return baseLineData(weeklySpots, 6, horizontalLines: [budgetLine]);
     }
   }
 
@@ -187,17 +196,22 @@ class _ExpenditureLineState extends State<ExpenditureLineChart> {
     bool disableTouch = false,
     int xTicks = 3,
     int yTicks = 4,
+    List<HorizontalLine> horizontalLines = const [],
   }) {
-    final rawMaxY =
-        spots.isEmpty
+    final rawSpotMax =
+        spots.isEmpty ? 0.0 : spots.map((s) => s.y).reduce((a, b) => max(a, b));
+
+    final rawLineMax =
+        horizontalLines.isEmpty
             ? 0.0
-            : spots.map((s) => s.y).reduce((a, b) => a > b ? a : b);
+            : horizontalLines.map((h) => h.y).reduce((a, b) => max(a, b));
+
+    final rawMaxY = max(rawSpotMax, rawLineMax);
+
     final maxY = rawMaxY * 1.1;
 
-    final double xInterval =
-        (maxX > 0 && xTicks > 1) ? maxX / (xTicks - 1) : 1.0;
-    final double yInterval = (maxY > 0 && yTicks > 0) ? maxY / yTicks : 1.0;
-
+    final yInterval = (maxY > 0 && yTicks > 0) ? maxY / yTicks : 1.0;
+    final xInterval = (maxX > 0 && xTicks > 1) ? maxX / (xTicks - 1) : 1.0;
     Widget buildXLabel(double value, TitleMeta meta) {
       const months = [
         'Jan',
@@ -263,11 +277,12 @@ class _ExpenditureLineState extends State<ExpenditureLineChart> {
       );
       if ((value / yInterval).roundToDouble() == value / yInterval) {
         if (value >= 1000) {
-          final k = (value / 1000).toStringAsFixed(0);
+          final kVal = value / 1000;
+          final digits = (kVal % 1 == 0) ? 0 : 1;
+          final label = kVal.toStringAsFixed(digits);
           return SideTitleWidget(
             meta: meta,
-            space: 8,
-            child: Text('${k}K', style: style),
+            child: Text('${label}K', style: style),
           );
         } else {
           return SideTitleWidget(
@@ -325,6 +340,7 @@ class _ExpenditureLineState extends State<ExpenditureLineChart> {
           disableTouch
               ? const LineTouchData(enabled: false)
               : const LineTouchData(),
+      extraLinesData: ExtraLinesData(horizontalLines: horizontalLines),
       lineBarsData: [
         LineChartBarData(
           spots: spots,
