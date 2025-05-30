@@ -62,20 +62,18 @@ class _HomePageState extends State<HomePage> {
                 ? SingleChildScrollView(
                   child: Column(
                     children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(context, createRoute(ReceiptPage()));
-                      },
-                      child: Text("Receipt Result"),
-                    ),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(context, createRoute(ReceiptPage()));
+                        },
+                        child: Text("Receipt Result"),
+                      ),
                       ElevatedButton(
                         onPressed: signOut,
                         child: Text("Sign out"),
                       ),
 
-                      SizedBox(
-                        child: CategoriesHolder(chart: const CategoriesChart()),
-                      ),
+                      SizedBox(child: const CategoriesChart()),
                       SizedBox(
                         child: ExpenditureHolder(
                           chart: const ExpenditureLineChart(),

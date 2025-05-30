@@ -196,13 +196,12 @@ class _CategoriesChartState extends State<CategoriesChart> {
                       child: Wrap(
                         spacing: 12,
                         runSpacing: 8,
-                        children: List.generate(
-                          4,
-                          (i) => LegendRow(
+                        children: List.generate(horizontalCount, (i) {
+                          return LegendRow(
                             color: getColorForIndex(i),
-                            text: categoryLabels[i],
-                          ),
-                        ),
+                            text: entries[i].key,
+                          );
+                        }),
                       ),
                     ),
                   ),
