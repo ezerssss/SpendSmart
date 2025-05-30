@@ -60,7 +60,7 @@ class ReceiptForm extends StatelessWidget {
                   vertical: 4,
                 ),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFFDF4EC),
+                  color: AppColors.secondary,
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
@@ -68,7 +68,7 @@ class ReceiptForm extends StatelessWidget {
                   style: const TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w500,
-                    color: AppColors.secondary,
+                    color: Colors.white,
                   ),
                 ),
               ),
