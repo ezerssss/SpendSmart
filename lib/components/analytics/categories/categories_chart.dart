@@ -6,7 +6,6 @@ import 'package:spendsmart/app_state.dart';
 import 'package:spendsmart/components/analytics/categories/legend_row.dart';
 import 'package:spendsmart/components/analytics/period_enum.dart';
 import 'package:spendsmart/errors/auth.dart';
-import 'package:spendsmart/services/auth.dart';
 import 'package:spendsmart/services/firestore.dart';
 import 'package:spendsmart/styles.dart';
 
@@ -45,7 +44,6 @@ class _CategoriesChartState extends State<CategoriesChart> {
   @override
   void initState() {
     super.initState();
-
     loadReceipts();
   }
 
@@ -165,10 +163,10 @@ class _CategoriesChartState extends State<CategoriesChart> {
             Padding(
               padding: const EdgeInsets.only(left: 8.0, top: 1.5),
               child: Text(
-                'PHP ${periodTotal.toStringAsFixed(2)}',
+                '₱ ${periodTotal.toStringAsFixed(2)}',
                 style: const TextStyle(
-                  color: AppColors.white,
-                  fontSize: 15,
+                  fontFamily: 'Roboto',
+                  fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
               ),
