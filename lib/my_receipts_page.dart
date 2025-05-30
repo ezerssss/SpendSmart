@@ -2,6 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:spendsmart/constants/receipt.dart';
+import 'package:spendsmart/receipt_page.dart';
+import 'package:spendsmart/utils/transitions.dart';
 import 'full_image.dart';
 import 'package:spendsmart/services/firestore.dart';
 import 'package:spendsmart/services/auth.dart';
@@ -165,15 +168,13 @@ class _MyReceiptsPageState extends State<MyReceiptsPage> {
                             child: getCard(receipt),
                             onTap:
                                 () => {
-                                  //route here to form
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(
-                                      builder: (_) {
-                                        return FullReceiptImage(
-                                          imageUrl: receipt.imageUrl,
-                                        );
-                                      },
+                                    createRoute(
+                                      ReceiptPage(
+                                        receipt: receipt,
+                                        isEditable: false,
+                                      ),
                                     ),
                                   ),
                                 },
