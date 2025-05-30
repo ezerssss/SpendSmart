@@ -2,7 +2,12 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:spendsmart/app_state.dart';
+import 'package:spendsmart/errors/auth.dart';
+import 'package:spendsmart/errors/network.dart';
 import 'package:spendsmart/models/receipt.dart';
+
+import '../utils/network.dart';
 
 class FirestoreService {
   static final FirebaseFirestore db = FirebaseFirestore.instance;
@@ -111,5 +116,23 @@ class FirestoreService {
       log('Error saving receipt: $e');
       rethrow;
     }
+  }
+
+  static Future<void> saveMonthlyBudget(int budget) async {
+    final hasConnection = await hasNetwork();
+
+    if (!hasConnection) {
+      throw NoNetwork();
+    }
+
+    final user = AppState().currentUser.value;
+
+    if (user.isEmpty) {
+      throw NoUser();
+    }
+
+    final userDocRef = db.collection("users").doc(user['uid']);
+
+    await userDocRef.update({"monthlyBudget": budget});
   }
 }
