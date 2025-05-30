@@ -76,7 +76,7 @@ class FirestoreService {
         .collection("receipts");
 
     try {
-      if (receiptId == "" || receiptId == null || receiptId.isEmpty) {
+      if (receiptId?.trim().isEmpty ?? true) {
         final docRef = await receiptsRef.add(Receipt.toMap(receipt));
         return docRef.id;
       } else {

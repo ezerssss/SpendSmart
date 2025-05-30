@@ -27,36 +27,49 @@ class _MyReceiptsPageState extends State<MyReceiptsPage> {
           width: 1,
         ),
       ),
-      margin: EdgeInsets.fromLTRB(5, 10, 5, 0),
+      margin: const EdgeInsets.fromLTRB(5, 10, 5, 0),
       child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  receipt.businessName,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                ),
-                Text(receipt.category),
-                Text(
-                  DateFormat(
-                    'MMMM d, y, h:mm a',
-                  ).format(DateTime.parse(receipt.date).toLocal()),
-                ),
-              ],
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    receipt.businessName,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  Text(
+                    receipt.category,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  Text(
+                    DateFormat(
+                      'MMMM d, y, h:mm a',
+                    ).format(DateTime.parse(receipt.date).toLocal()),
+                  ),
+                ],
+              ),
             ),
+
+            const SizedBox(width: 12),
+
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
-
               children: [
                 Text(
                   "₱${receipt.totalPrice}",
-                  style: TextStyle(fontFamily: 'Roboto', fontSize: 16),
+                  style: const TextStyle(fontFamily: 'Roboto', fontSize: 16),
                 ),
-                Text(""),
+                const SizedBox(height: 4),
                 Text(
                   "press to see receipt",
                   style: TextStyle(
