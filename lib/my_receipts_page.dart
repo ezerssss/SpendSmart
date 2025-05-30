@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:spendsmart/receipt_page.dart';
+import 'package:spendsmart/utils/transitions.dart';
 import 'full_image.dart';
 import 'package:spendsmart/services/firestore.dart';
 import 'package:spendsmart/services/auth.dart';
@@ -24,36 +26,49 @@ class _MyReceiptsPageState extends State<MyReceiptsPage> {
           width: 1,
         ),
       ),
-      margin: EdgeInsets.fromLTRB(5, 10, 5, 0),
+      margin: const EdgeInsets.fromLTRB(16, 16, 16, 0),
       child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  receipt.businessName,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                ),
-                Text(receipt.category),
-                Text(
-                  DateFormat(
-                    'MMMM d, y, h:mm a',
-                  ).format(DateTime.parse(receipt.date).toLocal()),
-                ),
-              ],
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    receipt.businessName,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  Text(
+                    receipt.category,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  Text(
+                    DateFormat(
+                      'MMMM d, y, h:mm a',
+                    ).format(DateTime.parse(receipt.date).toLocal()),
+                  ),
+                ],
+              ),
             ),
+
+            const SizedBox(width: 12),
+
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
-
               children: [
                 Text(
                   "₱${receipt.totalPrice}",
-                  style: TextStyle(fontFamily: 'Roboto', fontSize: 16),
+                  style: const TextStyle(fontFamily: 'Roboto', fontSize: 16),
                 ),
-                Text(""),
+                const SizedBox(height: 4),
                 Text(
                   "press to see receipt",
                   style: TextStyle(
@@ -95,10 +110,11 @@ class _MyReceiptsPageState extends State<MyReceiptsPage> {
       alignment: Alignment.center,
       child: Column(
         mainAxisSize: MainAxisSize.min,
+        spacing: 24,
         children: [
           LoadingAnimationWidget.hexagonDots(color: Colors.white, size: 20),
           Text(
-            "Fetching your receipts from the database  ",
+            "Fetching your receipts from the database",
             style: TextStyle(fontSize: 16),
           ),
         ],
@@ -107,17 +123,16 @@ class _MyReceiptsPageState extends State<MyReceiptsPage> {
   }
 
   late String? userId;
-  late CollectionReference receiptsRef;
   late Stream<QuerySnapshot> receiptStream;
   @override
   void initState() {
     super.initState();
     userId = AuthService.auth.currentUser?.uid;
-    receiptsRef = FirestoreService.db
+    final receiptsRef = FirestoreService.db
         .collection("users")
         .doc(userId)
-        .collection("receipts");
-
+        .collection("receipts")
+        .orderBy("date", descending: true);
     receiptStream = receiptsRef.snapshots();
   }
 
@@ -160,20 +175,19 @@ class _MyReceiptsPageState extends State<MyReceiptsPage> {
                         .map((DocumentSnapshot document) {
                           Receipt receipt = Receipt.fromMap(
                             document.data()! as Map<String, dynamic>,
+                            id: document.id,
                           );
                           return InkWell(
                             child: getCard(receipt),
                             onTap:
                                 () => {
-                                  //route here to form
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(
-                                      builder: (_) {
-                                        return FullReceiptImage(
-                                          imageUrl: receipt.imageUrl,
-                                        );
-                                      },
+                                    createRoute(
+                                      ReceiptPage(
+                                        receipt: receipt,
+                                        isEditable: false,
+                                      ),
                                     ),
                                   ),
                                 },

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:spendsmart/components/analytics/expenditure/expenditure_holder.dart';
 import 'package:spendsmart/components/analytics/expenditure/expenditure_line_chart.dart';
 import 'package:spendsmart/components/home/accordion_message.dart';
+import 'package:spendsmart/constants/receipt.dart';
 import 'package:spendsmart/processing_reciept_page.dart';
 import 'package:spendsmart/receipt_page.dart';
-import 'package:spendsmart/services/openai.dart';
 import 'package:spendsmart/utils/scanner.dart';
 import 'package:spendsmart/my_receipts_page.dart';
 import 'package:spendsmart/app_state.dart';
@@ -63,12 +63,6 @@ class _HomePageState extends State<HomePage> {
                   child: Column(
                     children: [
                       ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(context, createRoute(ReceiptPage()));
-                        },
-                        child: Text("Receipt Result"),
-                      ),
-                      ElevatedButton(
                         onPressed: signOut,
                         child: Text("Sign out"),
                       ),
@@ -87,6 +81,7 @@ class _HomePageState extends State<HomePage> {
                       AcccordionMessage(
                         query: "Money-Saving Suggestions for This Week",
                       ),
+                      SizedBox(height: 50),
                     ],
                   ),
                 )

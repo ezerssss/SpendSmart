@@ -64,4 +64,52 @@ class FirestoreService {
         res.docs.map((doc) => Receipt.fromMap(doc.data())).toList();
     return receipts;
   }
+
+  static Future<String> saveReceipt({
+    required String userId,
+    required Receipt receipt,
+    String? receiptId,
+  }) async {
+    final receiptsRef = db
+        .collection("users")
+        .doc(userId)
+        .collection("receipts");
+
+    try {
+      if (receiptId == null || receiptId.trim().isEmpty) {
+        final docRef = receiptsRef.doc();
+
+        final receiptWithId = Receipt(
+          id: docRef.id,
+          businessName: receipt.businessName,
+          category: receipt.category,
+          items: receipt.items,
+          date: receipt.date,
+          totalPrice: receipt.totalPrice,
+          imageUrl: receipt.imageUrl,
+        );
+
+        await docRef.set(Receipt.toMap(receiptWithId));
+        return docRef.id;
+      } else {
+        final docRef = receiptsRef.doc(receiptId);
+
+        final receiptWithId = Receipt(
+          id: receiptId,
+          businessName: receipt.businessName,
+          category: receipt.category,
+          items: receipt.items,
+          date: receipt.date,
+          totalPrice: receipt.totalPrice,
+          imageUrl: receipt.imageUrl,
+        );
+
+        await docRef.set(Receipt.toMap(receiptWithId));
+        return receiptId;
+      }
+    } catch (e) {
+      log('Error saving receipt: $e');
+      rethrow;
+    }
+  }
 }

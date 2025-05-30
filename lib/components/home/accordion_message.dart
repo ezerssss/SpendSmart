@@ -49,16 +49,18 @@ class _AccordionMessageState extends State<AcccordionMessage>
               alignment: Alignment.center,
               child: Padding(
                 padding: const EdgeInsets.all(20),
-                child: Row(
+                child: Column(
                   mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  spacing: 16,
                   children: [
-                    Text(
-                      "Please wait while the AI is analyzing your data  ",
-                      style: TextStyle(fontSize: 16),
-                    ),
                     LoadingAnimationWidget.hexagonDots(
                       color: Colors.white,
                       size: 12,
+                    ),
+                    Text(
+                      "Please wait while the AI is analyzing your data  ",
+                      style: TextStyle(fontSize: 16),
                     ),
                   ],
                 ),

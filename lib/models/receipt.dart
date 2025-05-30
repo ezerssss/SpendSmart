@@ -1,9 +1,9 @@
 import 'package:spendsmart/errors/receipt.dart';
 
 class Item {
-  final String name;
-  final double price;
-  final int quantity;
+  String name;
+  double price;
+  int quantity;
 
   Item({required this.name, required this.price, required this.quantity});
 
@@ -21,14 +21,16 @@ class Item {
 }
 
 class Receipt {
-  final String businessName;
-  final String category;
-  final List<Item> items;
-  final String date;
-  final String imageUrl;
-  final double totalPrice;
+  String? id;
+  String businessName;
+  String category;
+  List<Item> items;
+  String date;
+  String imageUrl;
+  double totalPrice;
 
   Receipt({
+    this.id,
     required this.businessName,
     required this.category,
     required this.items,
@@ -37,7 +39,7 @@ class Receipt {
     required this.totalPrice,
   });
 
-  static Receipt fromMap(Map<String, dynamic> map) {
+  static Receipt fromMap(Map<String, dynamic> map, {String? id}) {
     final List<Item> items = [];
 
     for (final item in map["items"]) {
@@ -45,6 +47,7 @@ class Receipt {
     }
 
     return Receipt(
+      id: id,
       businessName: map["businessName"],
       category: map["category"],
       items: items,
@@ -56,11 +59,9 @@ class Receipt {
 
   static Map<String, dynamic> toMap(Receipt receipt) {
     List<Map<String, dynamic>> itemsListMap =
-        receipt.items.map((item) {
-          return Item.toMap(item);
-        }).toList();
+        receipt.items.map((item) => Item.toMap(item)).toList();
 
-    return {
+    final map = {
       "businessName": receipt.businessName,
       "category": receipt.category,
       "items": itemsListMap,
@@ -68,6 +69,12 @@ class Receipt {
       "imageUrl": receipt.imageUrl,
       "totalPrice": receipt.totalPrice,
     };
+
+    if (receipt.id != null) {
+      map["id"] = receipt.id as Object;
+    }
+
+    return map;
   }
 
   static Receipt fromOpenAIResponse(Map<String, dynamic> map, String imageUrl) {
