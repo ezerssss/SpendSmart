@@ -97,18 +97,18 @@ class _ExpenditureLineState extends State<ExpenditureLineChart> {
   Widget build(BuildContext context) {
     final periodTotal = '₱ ${periodTotals[selectedPeriod]!.toStringAsFixed(2)}';
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 15, top: 1.5),
+              padding: const EdgeInsets.only(left: 8.0),
               child: Text(
-                periodTotal,
+                'Spending Trends',
                 style: const TextStyle(
                   color: AppColors.white,
-                  fontSize: 15,
-                  fontFamily: 'Roboto',
+                  fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -131,6 +131,25 @@ class _ExpenditureLineState extends State<ExpenditureLineChart> {
                       }).toList(),
             ),
           ],
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 8.0, top: 4),
+          child: Text(
+            selectedPeriod.periodLabel,
+            style: const TextStyle(color: AppColors.onWhite, fontSize: 12),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 8, top: 1.5, bottom: 10),
+          child: Text(
+            periodTotal,
+            style: const TextStyle(
+              color: AppColors.white,
+              fontSize: 15,
+              fontFamily: 'Roboto',
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
         AspectRatio(
           aspectRatio: 1.70,
