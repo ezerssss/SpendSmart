@@ -8,8 +8,10 @@ import 'package:spendsmart/errors/auth.dart';
 import 'package:spendsmart/errors/network.dart';
 import 'package:spendsmart/errors/receipt.dart';
 import 'package:spendsmart/models/receipt.dart';
+import 'package:spendsmart/receipt_page.dart';
 import 'package:spendsmart/services/openai.dart';
 import 'package:spendsmart/services/storage.dart';
+import 'package:spendsmart/utils/transitions.dart';
 
 enum ProcessingStates { uploading, analyzing, success, error }
 
@@ -113,7 +115,7 @@ class _ProcessingReceiptPageState extends State<ProcessingReceiptPage> {
             print(receipt!.businessName);
             print(receipt!.category);
             print(receipt!.totalPrice);
-            // TO DO: Route to form page
+            Navigator.pushReplacement(context, createRoute(ReceiptPage()));
           } else {
             currentState.value = ProcessingStates.error;
           }

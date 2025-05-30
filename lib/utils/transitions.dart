@@ -15,3 +15,52 @@ Route createRoute(Widget page) {
     },
   );
 }
+
+class ReceiptRevealAnimation extends StatefulWidget {
+  final Widget child;
+  final Duration duration;
+
+  const ReceiptRevealAnimation({
+    super.key,
+    required this.child,
+    this.duration = const Duration(seconds: 2),
+  });
+
+  @override
+  _ReceiptRevealAnimationState createState() => _ReceiptRevealAnimationState();
+}
+
+class _ReceiptRevealAnimationState extends State<ReceiptRevealAnimation>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = AnimationController(vsync: this, duration: widget.duration);
+
+    _animation = CurvedAnimation(parent: _controller, curve: Curves.easeInOut);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _controller.forward();
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizeTransition(
+      sizeFactor: _animation,
+      axis: Axis.vertical,
+      axisAlignment: -1.0,
+      child: widget.child,
+    );
+  }
+}
