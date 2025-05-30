@@ -67,32 +67,25 @@ class _CategoriesChartState extends State<CategoriesChart> {
 
     final receipts = await FirestoreService.getReceipts(user['uid'] as String);
     final dateToday = DateTime.now();
-    late DateTime cutoffDate;
+    late DateTime startDate;
 
     switch (selectedPeriod) {
       case PeriodEnum.month:
-        cutoffDate = DateTime(
-          dateToday.year,
-          dateToday.month - 1,
-          dateToday.day,
-        );
+        startDate = DateTime(dateToday.year, dateToday.month, 1);
         break;
       case PeriodEnum.year:
-        cutoffDate = DateTime(
-          dateToday.year - 1,
-          dateToday.month,
-          dateToday.day,
-        );
+        startDate = DateTime(dateToday.year, 1, 1);
         break;
       default:
-        cutoffDate = dateToday.subtract(Duration(days: 7));
+        final weekDay = dateToday.weekday;
+        startDate = dateToday.subtract(Duration(days: weekDay - 1));
         break;
     }
 
     final Map<String, double> sums = {};
     for (final receipt in receipts) {
       final dt = DateTime.parse(receipt.date);
-      if (dt.isBefore(cutoffDate)) continue;
+      if (dt.isBefore(startDate)) continue;
       sums[receipt.category] =
           (sums[receipt.category] ?? 0) + receipt.totalPrice;
     }
