@@ -105,12 +105,7 @@ class _ReceiptFormState extends State<ReceiptForm> {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder:
-                (_) => ReceiptRevealAnimation(
-                  child: ReceiptPage(
-                    receipt: updatedReceipt,
-                    isEditable: false,
-                  ),
-                ),
+                (_) => ReceiptPage(receipt: updatedReceipt, isEditable: false),
           ),
         );
       }

@@ -110,10 +110,11 @@ class _MyReceiptsPageState extends State<MyReceiptsPage> {
       alignment: Alignment.center,
       child: Column(
         mainAxisSize: MainAxisSize.min,
+        spacing: 24,
         children: [
           LoadingAnimationWidget.hexagonDots(color: Colors.white, size: 20),
           Text(
-            "Fetching your receipts from the database  ",
+            "Fetching your receipts from the database",
             style: TextStyle(fontSize: 16),
           ),
         ],
@@ -122,17 +123,16 @@ class _MyReceiptsPageState extends State<MyReceiptsPage> {
   }
 
   late String? userId;
-  late CollectionReference receiptsRef;
   late Stream<QuerySnapshot> receiptStream;
   @override
   void initState() {
     super.initState();
     userId = AuthService.auth.currentUser?.uid;
-    receiptsRef = FirestoreService.db
+    final receiptsRef = FirestoreService.db
         .collection("users")
         .doc(userId)
-        .collection("receipts");
-
+        .collection("receipts")
+        .orderBy("date", descending: true);
     receiptStream = receiptsRef.snapshots();
   }
 

@@ -23,7 +23,7 @@ class ReceiptRevealAnimation extends StatefulWidget {
   const ReceiptRevealAnimation({
     super.key,
     required this.child,
-    this.duration = const Duration(seconds: 2),
+    this.duration = const Duration(milliseconds: 1250),
   });
 
   @override
