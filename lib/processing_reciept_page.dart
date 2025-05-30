@@ -4,6 +4,7 @@ import 'package:spendsmart/components/processing_receipt/loader_screen.dart';
 import 'dart:async';
 
 import 'package:spendsmart/components/processing_receipt/result_screen.dart';
+import 'package:spendsmart/constants/receipt.dart';
 import 'package:spendsmart/errors/auth.dart';
 import 'package:spendsmart/errors/network.dart';
 import 'package:spendsmart/errors/receipt.dart';
@@ -115,7 +116,10 @@ class _ProcessingReceiptPageState extends State<ProcessingReceiptPage> {
             print(receipt!.businessName);
             print(receipt!.category);
             print(receipt!.totalPrice);
-            Navigator.pushReplacement(context, createRoute(ReceiptPage()));
+            Navigator.pushReplacement(
+              context,
+              createRoute(ReceiptPage(receipt: SAMPLE_RECEIPT)),
+            );
           } else {
             currentState.value = ProcessingStates.error;
           }

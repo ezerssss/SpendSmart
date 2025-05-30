@@ -1,17 +1,25 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:spendsmart/app_state.dart';
 import 'package:spendsmart/constants/receipt.dart';
 import 'package:spendsmart/models/receipt.dart';
+import 'package:spendsmart/receipt_page.dart';
+import 'package:spendsmart/services/firestore.dart';
 import 'package:spendsmart/styles.dart';
 
 class ReceiptForm extends StatefulWidget {
   final bool isEditable;
   final Receipt receipt;
+  final void Function(Receipt) onSubmit;
+  final String? id;
 
   const ReceiptForm({
     super.key,
     required this.isEditable,
     required this.receipt,
+    required this.onSubmit,
+    this.id,
   });
 
   @override
@@ -23,6 +31,8 @@ class _ReceiptFormState extends State<ReceiptForm> {
   late String _category;
   late List<Item> _items;
   late String _date;
+  late String _imageUrl;
+  bool _isSaving = false;
 
   @override
   void initState() {
@@ -33,6 +43,7 @@ class _ReceiptFormState extends State<ReceiptForm> {
     _category = widget.receipt.category;
     _items = List.from(widget.receipt.items);
     _date = widget.receipt.date;
+    _imageUrl = widget.receipt.imageUrl;
   }
 
   @override
@@ -54,6 +65,55 @@ class _ReceiptFormState extends State<ReceiptForm> {
     setState(() {
       _items.removeAt(index);
     });
+  }
+
+  Future<void> handleSave() async {
+    setState(() {
+      _isSaving = true;
+    });
+
+    final updatedReceipt = Receipt(
+      id: widget.receipt.id,
+      businessName: _businessNameController.text,
+      category: _category,
+      items: _items,
+      date: _date,
+      totalPrice: total,
+      imageUrl: _imageUrl,
+    );
+
+    final user = AppState().currentUser.value;
+
+    try {
+      final receiptId = await FirestoreService.saveReceipt(
+        userId: user["uid"],
+        receipt: updatedReceipt,
+        receiptId: updatedReceipt.id,
+      );
+
+      print("Receipt saved/updated with ID: $receiptId");
+
+      updatedReceipt.id = receiptId;
+
+      widget.onSubmit?.call(updatedReceipt);
+
+      if (context.mounted) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder:
+                (_) => ReceiptPage(receipt: updatedReceipt, isEditable: false),
+          ),
+        );
+      }
+    } catch (e) {
+      print("Error saving receipt: $e");
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isSaving = false;
+        });
+      }
+    }
   }
 
   @override
@@ -443,6 +503,28 @@ class _ReceiptFormState extends State<ReceiptForm> {
                 ),
               ],
             ),
+            const SizedBox(height: 16),
+            if (widget.isEditable)
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: _isSaving ? null : handleSave,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.secondary,
+                    foregroundColor: Colors.black,
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    textStyle: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  child: Text(_isSaving ? "Saving" : "Save"),
+                ),
+              ),
           ],
         ),
       ),

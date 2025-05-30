@@ -21,6 +21,7 @@ class Item {
 }
 
 class Receipt {
+  String? id;
   String businessName;
   String category;
   List<Item> items;
@@ -29,6 +30,7 @@ class Receipt {
   double totalPrice;
 
   Receipt({
+    this.id,
     required this.businessName,
     required this.category,
     required this.items,
@@ -37,7 +39,7 @@ class Receipt {
     required this.totalPrice,
   });
 
-  static Receipt fromMap(Map<String, dynamic> map) {
+  static Receipt fromMap(Map<String, dynamic> map, {String? id}) {
     final List<Item> items = [];
 
     for (final item in map["items"]) {
@@ -45,6 +47,7 @@ class Receipt {
     }
 
     return Receipt(
+      id: id,
       businessName: map["businessName"],
       category: map["category"],
       items: items,
@@ -56,9 +59,7 @@ class Receipt {
 
   static Map<String, dynamic> toMap(Receipt receipt) {
     List<Map<String, dynamic>> itemsListMap =
-        receipt.items.map((item) {
-          return Item.toMap(item);
-        }).toList();
+        receipt.items.map((item) => Item.toMap(item)).toList();
 
     return {
       "businessName": receipt.businessName,
