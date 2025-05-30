@@ -61,7 +61,7 @@ class Receipt {
     List<Map<String, dynamic>> itemsListMap =
         receipt.items.map((item) => Item.toMap(item)).toList();
 
-    return {
+    final map = {
       "businessName": receipt.businessName,
       "category": receipt.category,
       "items": itemsListMap,
@@ -69,6 +69,12 @@ class Receipt {
       "imageUrl": receipt.imageUrl,
       "totalPrice": receipt.totalPrice,
     };
+
+    if (receipt.id != null) {
+      map["id"] = receipt.id as Object;
+    }
+
+    return map;
   }
 
   static Receipt fromOpenAIResponse(Map<String, dynamic> map, String imageUrl) {

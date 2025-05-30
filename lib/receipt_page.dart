@@ -31,7 +31,7 @@ class ReceiptPage extends StatelessWidget {
               icon: const Icon(Icons.edit),
               tooltip: 'Edit Receipt',
               onPressed: () {
-                Navigator.of(context).push(
+                Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
                     builder:
                         (_) => ReceiptPage(receipt: receipt, isEditable: true),

@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:spendsmart/constants/receipt.dart';
 import 'package:spendsmart/receipt_page.dart';
 import 'package:spendsmart/utils/transitions.dart';
 import 'full_image.dart';
@@ -176,6 +175,7 @@ class _MyReceiptsPageState extends State<MyReceiptsPage> {
                         .map((DocumentSnapshot document) {
                           Receipt receipt = Receipt.fromMap(
                             document.data()! as Map<String, dynamic>,
+                            id: document.id,
                           );
                           return InkWell(
                             child: getCard(receipt),

@@ -1,9 +1,12 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:spendsmart/app_state.dart';
 import 'package:spendsmart/constants/receipt.dart';
 import 'package:spendsmart/models/receipt.dart';
 import 'package:spendsmart/receipt_page.dart';
+import 'package:spendsmart/services/auth.dart';
 import 'package:spendsmart/services/firestore.dart';
 import 'package:spendsmart/styles.dart';
 
@@ -29,6 +32,7 @@ class _ReceiptFormState extends State<ReceiptForm> {
   late List<Item> _items;
   late String _date;
   late String _imageUrl;
+  late String? _id;
   bool _isSaving = false;
 
   @override
@@ -41,6 +45,7 @@ class _ReceiptFormState extends State<ReceiptForm> {
     _items = List.from(widget.receipt.items);
     _date = widget.receipt.date;
     _imageUrl = widget.receipt.imageUrl;
+    _id = widget.receipt.id;
   }
 
   @override
@@ -70,7 +75,7 @@ class _ReceiptFormState extends State<ReceiptForm> {
     });
 
     final updatedReceipt = Receipt(
-      id: widget.receipt.id,
+      id: _id,
       businessName: _businessNameController.text,
       category: _category,
       items: _items,
@@ -79,18 +84,22 @@ class _ReceiptFormState extends State<ReceiptForm> {
       imageUrl: _imageUrl,
     );
 
-    final user = AppState().currentUser.value;
+    log("From form: CURRENT: ${widget.receipt.id}");
+
+    final String userId = AuthService.auth.currentUser!.uid;
+
+    log("User ID: ${userId}");
 
     try {
       final receiptId = await FirestoreService.saveReceipt(
-        userId: user["uid"],
+        userId: userId,
         receipt: updatedReceipt,
         receiptId: updatedReceipt.id,
       );
 
-      print("Receipt saved/updated with ID: $receiptId");
-
       updatedReceipt.id = receiptId;
+
+      log("From form: UPDATED: ${updatedReceipt.id}");
 
       if (context.mounted) {
         Navigator.of(context).pushReplacement(
