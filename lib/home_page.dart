@@ -64,20 +64,6 @@ class _HomePageState extends State<HomePage> {
                   child: Column(
                     children: [
                       ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            createRoute(
-                              ReceiptPage(
-                                receipt: SAMPLE_RECEIPT,
-                                isEditable: true,
-                              ),
-                            ),
-                          );
-                        },
-                        child: Text("Receipt Result"),
-                      ),
-                      ElevatedButton(
                         onPressed: signOut,
                         child: Text("Sign out"),
                       ),

@@ -119,12 +119,7 @@ class _ProcessingReceiptPageState extends State<ProcessingReceiptPage> {
             Future.delayed(const Duration(seconds: 2), () {
               Navigator.pushReplacement(
                 context,
-                createRoute(
-                  ReceiptPage(
-                    receipt: receipt!,
-                    isEditable: true,
-                  ), // Use actual receipt
-                ),
+                createRoute(ReceiptPage(receipt: receipt!, isEditable: true)),
               );
             });
           } else {
