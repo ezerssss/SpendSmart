@@ -5,6 +5,7 @@ import 'package:spendsmart/components/home/accordion_message.dart';
 import 'package:spendsmart/constants/receipt.dart';
 import 'package:spendsmart/processing_reciept_page.dart';
 import 'package:spendsmart/receipt_page.dart';
+import 'package:spendsmart/services/firestore.dart';
 import 'package:spendsmart/utils/scanner.dart';
 import 'package:spendsmart/my_receipts_page.dart';
 import 'package:spendsmart/app_state.dart';
@@ -53,6 +54,60 @@ class _HomePageState extends State<HomePage> {
     Icons.receipt_long_rounded,
   ];
 
+  String budgetString = "0";
+
+  Future<void> _dialogBuilder(BuildContext context) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Set Budget'),
+          content: TextFormField(
+            keyboardType: TextInputType.number,
+            decoration: const InputDecoration(
+              hintText: 'PHP 0.00',
+              labelText: 'Monthly Budget',
+            ),
+            initialValue:
+                AppState().currentUser.value['monthlyBudget']?.toString() ??
+                '0',
+            onChanged: (value) {
+              setState(() {
+                budgetString = value;
+              });
+            },
+          ),
+          actions: <Widget>[
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('Set'),
+              onPressed: () async {
+                await FirestoreService.saveMonthlyBudget(
+                  int.parse(budgetString),
+                );
+                AppState().currentUser.value["monthlyBudget"] = int.parse(
+                  budgetString,
+                );
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,9 +117,61 @@ class _HomePageState extends State<HomePage> {
                 ? SingleChildScrollView(
                   child: Column(
                     children: [
-                      ElevatedButton(
-                        onPressed: signOut,
-                        child: Text("Sign out"),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 20,
+                          right: 20,
+                          top: 10,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Hello, ${AppState().currentUser.value["displayName"].split(' ')[0] ?? "User"}!",
+                              style: const TextStyle(
+                                color: AppColors.secondary,
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Row(
+                              spacing: 10,
+                              children: [
+                                ElevatedButton(
+                                  onPressed: () => _dialogBuilder(context),
+                                  style: ButtonStyle(
+                                    padding: WidgetStatePropertyAll(
+                                      EdgeInsets.symmetric(horizontal: 12),
+                                    ),
+                                  ),
+                                  child: Text(
+                                    "Set budget",
+                                    style: const TextStyle(
+                                      color: AppColors.white,
+                                      fontSize: 10,
+                                    ),
+                                  ),
+                                ),
+                                ElevatedButton(
+                                  onPressed: signOut,
+                                  style: ButtonStyle(
+                                    padding: WidgetStatePropertyAll(
+                                      EdgeInsets.symmetric(horizontal: 12),
+                                    ),
+                                  ),
+                                  child: Text(
+                                    "Log out",
+                                    style: const TextStyle(
+                                      color: AppColors.white,
+                                      fontSize: 10,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
 
                       SizedBox(child: const CategoriesChart()),

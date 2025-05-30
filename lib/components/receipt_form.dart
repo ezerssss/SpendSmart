@@ -8,7 +8,6 @@ import 'package:spendsmart/receipt_page.dart';
 import 'package:spendsmart/services/auth.dart';
 import 'package:spendsmart/services/firestore.dart';
 import 'package:spendsmart/styles.dart';
-import 'package:spendsmart/utils/transitions.dart';
 
 class ReceiptForm extends StatefulWidget {
   final bool isEditable;
