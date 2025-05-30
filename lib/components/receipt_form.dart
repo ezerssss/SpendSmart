@@ -2,13 +2,13 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:spendsmart/app_state.dart';
 import 'package:spendsmart/constants/receipt.dart';
 import 'package:spendsmart/models/receipt.dart';
 import 'package:spendsmart/receipt_page.dart';
 import 'package:spendsmart/services/auth.dart';
 import 'package:spendsmart/services/firestore.dart';
 import 'package:spendsmart/styles.dart';
+import 'package:spendsmart/utils/transitions.dart';
 
 class ReceiptForm extends StatefulWidget {
   final bool isEditable;
@@ -105,7 +105,12 @@ class _ReceiptFormState extends State<ReceiptForm> {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder:
-                (_) => ReceiptPage(receipt: updatedReceipt, isEditable: false),
+                (_) => ReceiptRevealAnimation(
+                  child: ReceiptPage(
+                    receipt: updatedReceipt,
+                    isEditable: false,
+                  ),
+                ),
           ),
         );
       }

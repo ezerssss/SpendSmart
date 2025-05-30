@@ -116,12 +116,17 @@ class _ProcessingReceiptPageState extends State<ProcessingReceiptPage> {
             print(receipt!.businessName);
             print(receipt!.category);
             print(receipt!.totalPrice);
-            Navigator.pushReplacement(
-              context,
-              createRoute(
-                ReceiptPage(receipt: SAMPLE_RECEIPT, isEditable: true),
-              ),
-            );
+            Future.delayed(const Duration(seconds: 2), () {
+              Navigator.pushReplacement(
+                context,
+                createRoute(
+                  ReceiptPage(
+                    receipt: receipt!,
+                    isEditable: true,
+                  ), // Use actual receipt
+                ),
+              );
+            });
           } else {
             currentState.value = ProcessingStates.error;
           }
