@@ -1,9 +1,9 @@
 import 'package:spendsmart/errors/receipt.dart';
 
 class Item {
-  final String name;
-  final double price;
-  final int quantity;
+  String name;
+  double price;
+  int quantity;
 
   Item({required this.name, required this.price, required this.quantity});
 
@@ -21,12 +21,12 @@ class Item {
 }
 
 class Receipt {
-  final String businessName;
-  final String category;
-  final List<Item> items;
-  final String date;
-  final String imageUrl;
-  final double totalPrice;
+  String businessName;
+  String category;
+  List<Item> items;
+  String date;
+  String imageUrl;
+  double totalPrice;
 
   Receipt({
     required this.businessName,

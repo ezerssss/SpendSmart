@@ -1,0 +1,17 @@
+const List<String> CATEGORIES = [
+  "Grocery",
+  "Restaurant",
+  "Fast Food",
+  "Cafe",
+  "Retail",
+  "Pharmacy",
+  "Gas Station",
+  "Electronics",
+  "Clothing",
+  "Home Improvement",
+  "Office Supplies",
+  "Bookstore",
+  "Bakery",
+  "Liquor Store",
+  "Convenience Store",
+];
