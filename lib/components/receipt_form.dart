@@ -344,10 +344,12 @@ class _ReceiptFormState extends State<ReceiptForm> {
                               child: TextFormField(
                                 initialValue: item.quantity.toString(),
                                 keyboardType: TextInputType.number,
-                                onChanged:
-                                    (val) =>
-                                        _items[index].quantity =
-                                            int.tryParse(val) ?? 1,
+                                onChanged: (val) {
+                                  setState(() {
+                                    _items[index].quantity =
+                                        int.tryParse(val) ?? 1;
+                                  });
+                                },
                                 style: const TextStyle(
                                   color: Colors.black87,
                                   fontSize: 14,
@@ -380,10 +382,12 @@ class _ReceiptFormState extends State<ReceiptForm> {
                               child: TextFormField(
                                 initialValue: item.price.toString(),
                                 keyboardType: TextInputType.number,
-                                onChanged:
-                                    (val) =>
-                                        _items[index].price =
-                                            double.tryParse(val) ?? 0,
+                                onChanged: (val) {
+                                  setState(() {
+                                    _items[index].price =
+                                        double.tryParse(val) ?? 0;
+                                  });
+                                },
                                 style: const TextStyle(
                                   color: Colors.black87,
                                   fontSize: 14,

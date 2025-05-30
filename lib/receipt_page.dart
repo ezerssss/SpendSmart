@@ -43,12 +43,9 @@ class ReceiptPage extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
-        child:
-            isEditable
-                ? ReceiptForm(isEditable: isEditable, receipt: receipt)
-                : ReceiptRevealAnimation(
-                  child: ReceiptForm(isEditable: isEditable, receipt: receipt),
-                ),
+        child: ReceiptRevealAnimation(
+          child: ReceiptForm(isEditable: isEditable, receipt: receipt),
+        ),
       ),
     );
   }

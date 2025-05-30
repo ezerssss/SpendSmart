@@ -26,7 +26,7 @@ class _MyReceiptsPageState extends State<MyReceiptsPage> {
           width: 1,
         ),
       ),
-      margin: const EdgeInsets.fromLTRB(5, 10, 5, 0),
+      margin: const EdgeInsets.fromLTRB(16, 16, 16, 0),
       child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Row(

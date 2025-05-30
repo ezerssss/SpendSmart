@@ -84,6 +84,7 @@ class _HomePageState extends State<HomePage> {
                       AcccordionMessage(
                         query: "Money-Saving Suggestions for This Week",
                       ),
+                      SizedBox(height: 50),
                     ],
                   ),
                 )
