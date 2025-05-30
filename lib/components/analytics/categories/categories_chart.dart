@@ -2,8 +2,10 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:spendsmart/app_state.dart';
 import 'package:spendsmart/components/analytics/categories/legend_row.dart';
 import 'package:spendsmart/components/analytics/period_enum.dart';
+import 'package:spendsmart/errors/auth.dart';
 import 'package:spendsmart/services/auth.dart';
 import 'package:spendsmart/services/firestore.dart';
 import 'package:spendsmart/styles.dart';
@@ -40,12 +42,10 @@ class _CategoriesChartState extends State<CategoriesChart> {
     AppColors.onWhite,
   ];
 
-  late String userId;
-
   @override
   void initState() {
     super.initState();
-    userId = AuthService.auth.currentUser!.uid;
+
     loadReceipts();
   }
 
@@ -59,7 +59,13 @@ class _CategoriesChartState extends State<CategoriesChart> {
   double get periodTotal => data.values.fold(0.0, (sum, price) => sum + price);
 
   Future<void> loadReceipts() async {
-    final receipts = await FirestoreService.getReceipts(userId);
+    final user = AppState().currentUser.value;
+
+    if (user.isEmpty) {
+      throw NoUser();
+    }
+
+    final receipts = await FirestoreService.getReceipts(user['uid'] as String);
     final dateToday = DateTime.now();
     late DateTime cutoffDate;
 
