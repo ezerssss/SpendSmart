@@ -3,6 +3,7 @@ import 'package:spendsmart/components/analytics/expenditure/expenditure_holder.d
 import 'package:spendsmart/components/analytics/expenditure/expenditure_line_chart.dart';
 import 'package:spendsmart/components/home/accordion_message.dart';
 import 'package:spendsmart/processing_reciept_page.dart';
+import 'package:spendsmart/receipt_page.dart';
 import 'package:spendsmart/services/openai.dart';
 import 'package:spendsmart/utils/scanner.dart';
 import 'package:spendsmart/my_receipts_page.dart';
@@ -61,11 +62,20 @@ class _HomePageState extends State<HomePage> {
                 ? SingleChildScrollView(
                   child: Column(
                     children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(context, createRoute(ReceiptPage()));
+                      },
+                      child: Text("Receipt Result"),
+                    ),
                       ElevatedButton(
                         onPressed: signOut,
                         child: Text("Sign out"),
                       ),
-                      SizedBox(child: const CategoriesChart()),
+
+                      SizedBox(
+                        child: CategoriesHolder(chart: const CategoriesChart()),
+                      ),
                       SizedBox(
                         child: ExpenditureHolder(
                           chart: const ExpenditureLineChart(),
