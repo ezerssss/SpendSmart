@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:spendsmart/app_state.dart';
@@ -11,14 +10,12 @@ import 'package:spendsmart/styles.dart';
 class ReceiptForm extends StatefulWidget {
   final bool isEditable;
   final Receipt receipt;
-  final void Function(Receipt) onSubmit;
   final String? id;
 
   const ReceiptForm({
     super.key,
     required this.isEditable,
     required this.receipt,
-    required this.onSubmit,
     this.id,
   });
 
@@ -94,8 +91,6 @@ class _ReceiptFormState extends State<ReceiptForm> {
       print("Receipt saved/updated with ID: $receiptId");
 
       updatedReceipt.id = receiptId;
-
-      widget.onSubmit?.call(updatedReceipt);
 
       if (context.mounted) {
         Navigator.of(context).pushReplacement(

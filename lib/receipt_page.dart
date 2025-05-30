@@ -7,11 +7,11 @@ class ReceiptPage extends StatelessWidget {
   final Receipt receipt;
   final bool isEditable;
 
-  const ReceiptPage({super.key, required this.receipt, this.isEditable = true});
-
-  void handleReceiptSubmit(Receipt receipt) {
-    print('Received receipt from form: $receipt');
-  }
+  const ReceiptPage({
+    super.key,
+    required this.receipt,
+    this.isEditable = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -25,19 +25,30 @@ class ReceiptPage extends StatelessWidget {
           icon: const Icon(Icons.close),
           onPressed: () => Navigator.pop(context),
         ),
+        actions: [
+          if (!isEditable)
+            IconButton(
+              icon: const Icon(Icons.edit),
+              tooltip: 'Edit Receipt',
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder:
+                        (_) => ReceiptPage(receipt: receipt, isEditable: true),
+                  ),
+                );
+              },
+            ),
+        ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            ReceiptRevealAnimation(
-              child: ReceiptForm(
-                isEditable: isEditable,
-                receipt: receipt,
-                onSubmit: handleReceiptSubmit,
-              ),
-            ),
-          ],
+        child: ReceiptRevealAnimation(
+          child: ReceiptForm(
+            isEditable: isEditable,
+            receipt: receipt,
+            // optionally add onSubmit if needed
+          ),
         ),
       ),
     );

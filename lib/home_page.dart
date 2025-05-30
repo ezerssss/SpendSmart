@@ -67,7 +67,12 @@ class _HomePageState extends State<HomePage> {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            createRoute(ReceiptPage(receipt: SAMPLE_RECEIPT)),
+                            createRoute(
+                              ReceiptPage(
+                                receipt: SAMPLE_RECEIPT,
+                                isEditable: true,
+                              ),
+                            ),
                           );
                         },
                         child: Text("Receipt Result"),

@@ -118,7 +118,9 @@ class _ProcessingReceiptPageState extends State<ProcessingReceiptPage> {
             print(receipt!.totalPrice);
             Navigator.pushReplacement(
               context,
-              createRoute(ReceiptPage(receipt: SAMPLE_RECEIPT)),
+              createRoute(
+                ReceiptPage(receipt: SAMPLE_RECEIPT, isEditable: true),
+              ),
             );
           } else {
             currentState.value = ProcessingStates.error;
